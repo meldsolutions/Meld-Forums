@@ -1,0 +1,16 @@
+/*
+<!---
+||PACKAGENAMELICENSE||
+--->
+*/
+* {
+	font-family: "Lucida Grande",Arial,Helvetica,sans-serif;	
+}
+h4 {
+	margin: 10px 0 5px;
+}
+
+a.tooltip {
+	display: inline;
+	color: #333;
+}
