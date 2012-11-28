@@ -55,6 +55,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset sArgs.pageBean			= pageBean />
 		<cfset sArgs.MFBean				= rc.MFBean />
 
+		<cfif StructKeyExists(rc,"params") and StructKeyExists(rc.params,"conferenceIDList")>
+			<cfset sArgs.conferenceIDList = rc.params.conferenceIDList />
+		</cfif>
+
 		<cfset aThread = searchManager.doSearch( argumentCollection=sArgs ) />
 		<cfset rc.pageBean = pageBean />
 		<cfset rc.aThread = aThread />

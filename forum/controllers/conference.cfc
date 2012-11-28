@@ -31,6 +31,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset doGetConferences( argumentCollection=arguments ) />
 	</cffunction>
 
+	<cffunction name="select" access="public" returntype="void" output="false">
+		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
+
+		<cfset doGetConferences( argumentCollection=arguments ) />
+	</cffunction>
+
 	<cffunction name="doGetConferences" returntype="void" access="private" output="false">
 		<cfargument name="rc" type="struct" required="true">
 
@@ -45,11 +51,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var pluginEvent 			= createEvent(rc) />
 		<cfset var idx					= 0 />
 		<cfset var ConferenceBean		= "" />
-
+	
 		<cfif len( rc.meldForumsBean.getIdent() )>
 			<cfset idx = rereplace( rc.meldForumsBean.getIdent(),"[^\d]","","all" ) />
 
 		</cfif>
+
 
 		<!--- friendlyname ident --->
 		<cfif len( rc.meldForumsBean.getIdent() ) and isNumeric(idx) >
@@ -67,6 +74,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				<cfif StructKeyExists(rc.params,"conferenceID") and len( rc.params.conferenceID )>
 					<cfset sArgs.conferenceID = rc.params.conferenceID />
 				</cfif>
+
 
 				<cfset aConferences	= conferenceService.getConferences( argumentCollection=sArgs ) />
 			</cfif>

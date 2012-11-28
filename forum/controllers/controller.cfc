@@ -37,6 +37,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var meldForumsRequestManager	= getBeanFactory().getBean("MeldForumsRequestManager") />
 		<cfset var sInitArgs				= StructNew()>
 
+		<cfif structKeyExists(rc,"params") and structKeyExists(rc.params,"conferenceIDList") and isArray(rc.params.conferenceIDList)>
+			<cfset rc.params.conferenceIDList = arrayToList(rc.params.conferenceIDList) />
+		</cfif>
+
 		<!--- headloader for head includes --->
 		<cfset rc.headLoader = ArrayNew(1) />
 		<!--- pluginConfig --->

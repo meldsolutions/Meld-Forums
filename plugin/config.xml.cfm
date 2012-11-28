@@ -81,6 +81,14 @@
 	<eventHandler event="onApplicationLoad" component="events.eventHandler" persist="false"/>
 </eventHandlers>
 
-<displayobjects location="global" />
+<displayobjects location="global">
+	<displayobject
+	    name="Conferences (Select)"
+	    displaymethod="renderApp"
+	    component="forum.display.displayManager"
+	    configuratorInit="initConfConfigurator"
+	    configuratorJS="forum/assets/js/confConfigurator.js"
+	    persist="false" />
+</displayobjects>
 
 </plugin>

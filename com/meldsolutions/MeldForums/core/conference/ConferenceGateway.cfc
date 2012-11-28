@@ -51,6 +51,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="Idx" type="numeric" required="false" />
 		<!---^^ATTRIBUTES-END^^--->
 		<cfargument name="orderby" type="string" required="false" />
+		<cfargument name="IDList" type="string" required="false" />
+
 		<cfset var qList = "" />		
 		<cfquery name="qList" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
 			SELECT
@@ -60,6 +62,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<!---^^VALUES-START^^--->
 			<cfif structKeyExists(arguments,"ConferenceID") and len(arguments.ConferenceID)>
 				AND cnf.ConferenceID = <cfqueryparam value="#arguments.ConferenceID#" CFSQLType="cf_sql_char" maxlength="35" />
+			<cfelseif structKeyExists(arguments,"IDList") and len(arguments.IDList)>
+				AND cnf.ConferenceID IN (<cfqueryparam value="#arguments.IDList#" CFSQLType="cf_sql_char" maxlength="35" list="true" />)
 			</cfif>
 			
 			<cfif structKeyExists(arguments,"SiteID") and len(arguments.SiteID)>
@@ -135,6 +139,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="Idx" type="numeric" required="false" />
 		<!---^^ATTRIBUTES-END^^--->
 		<cfargument name="orderby" type="string" required="false" />
+		<cfargument name="IDList" type="string" required="false" />
 		
 		<cfset var qList = getByAttributesQuery(argumentCollection=arguments) />		
 		<cfset var arrObjects = arrayNew(1) />

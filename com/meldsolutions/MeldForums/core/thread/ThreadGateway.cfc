@@ -77,7 +77,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfif arguments.isCount>
 				COUNT(thr.threadID) AS total
 			<cfelse>
-				thr.*,1 AS BeanExists,vws.views AS viewCounter,thr.typeID = 1 as issticky
+				thr.*,1 AS BeanExists,vws.views AS viewCounter,
+				<cfif variables.dsntype eq "mssql">
+				thr.typeID as issticky
+				<cfelse>
+				thr.typeID = 1 as issticky
+				</cfif>
 			</cfif>
 			FROM	#variables.dsnprefix#mf_thread thr
 			<cfif not arguments.isCount>

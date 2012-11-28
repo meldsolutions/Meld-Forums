@@ -87,6 +87,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="Idx" type="numeric" required="false" />
 		<!---^^ATTRIBUTES-END^^--->
 		<cfargument name="doForums" type="boolean" required="false" default="false" />
+		<cfargument name="IDList" type="string" required="false" />
 		
 		<cfset var aConferences		= getConferenceGateway().getByAttributes( argumentCollection=arguments )>
 		<cfset var iiX				= 0 />

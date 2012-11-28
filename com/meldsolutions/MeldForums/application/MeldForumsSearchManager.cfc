@@ -42,6 +42,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="pageBean" type="any" required="true" />
 		<cfargument name="MFBean" type="any" required="true" />
 		<cfargument name="isCount" type="boolean" required="false" default="false" />
+		<cfargument name="conferenceIDList" type="string" required="false" default="" />
 		
 		<cfset var arrObjects		= ArrayNew(1)>
 		<cfset var arrIdArray		= ArrayNew(1)>
@@ -84,6 +85,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="MFBean" type="any" required="true" />
 		<cfargument name="isCount" type="boolean" required="false" default="false" />
 		<cfargument name="orderby" type="string" required="false" default="sea.dateLastUpdate DESC" />
+		<cfargument name="conferenceIDList" type="string" required="false" default="" />
 	
 		<cfset var qList	= "" />		
 		<cfset var qUser	= "" />		
@@ -155,6 +157,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 					frm.conferenceID = cnf.conferenceID
 					AND
 					cnf.isActive = 1
+					<cfif len(arguments.conferenceIDList)>
+						AND cnf.ConferenceID IN (<cfqueryparam value="#arguments.conferenceIDList#" CFSQLType="cf_sql_char" maxlength="35" list="true" />)
+					</cfif>
 				)
 			LEFT JOIN
 				#variables.dsnprefix#mf_configuration con

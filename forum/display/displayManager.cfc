@@ -125,7 +125,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<!--- return the result --->
 		<cfreturn result>
 	</cffunction>
-
+<!---
 	<!--- Mura Content Object dropdown renderer --->
 	<cffunction name="renderAppOptionsRender" output="false" returntype="any">
 		<cfargument name="$">
@@ -143,15 +143,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfsavecontent variable="str"><cfoutput>
 		<select name="availableObjects" id="availableObjects" class="multiSelect" size="14" style="width: 310px;">
 			<option value='plugin~Conferences (All)~#arguments.event.getValue("ObjectID")#~{"action":"conference"}'>Conferences (All)</option>
+			<!---<option value='plugin~Conference (Selected)~#arguments.event.getValue("ObjectID")#~{"action":"conferenceselect"}'>Conference (Selected)</option>--->
+			<!---
 			<cfloop from="1" to="#ArrayLen(aConferences)#" index="iiX">
 				<option value='plugin~#aConferences[iiX].getName()#~#arguments.event.getValue("ObjectID")#~{"action":"conference","conferenceid":"#aConferences[iiX].getConferenceID()#"}'>#aConferences[iiX].getName()#</option>
 			</cfloop>
+			--->
 		</select>
 		</cfoutput></cfsavecontent>
 
 		<cfreturn str>
 	</cffunction>
-
+--->
 	<cffunction name="getFrameworkConfig" output="false">
 		<cfset var framework = StructNew() />
 
