@@ -26,17 +26,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var params= rc.$.event("params") />
 		<cfset var conferenceService	= getBeanFactory().getBean("conferenceService") />
 		<cfset var aConferences			= conferenceService.getConferences( isActive=1,siteID=rc.siteID ) />
-			
-		<cfif isJSON(params)>
-			<cfset params = deserializeJSON(params) />
-		<cfelse>
-			<cfset params = structNew() />
+		
+		<cfset rc.idlist = "" />
+
+		<cfif structKeyExists(rc,"params") and isJSON(rc.params)>
+			<cfset rc.objparams = deserializeJSON(rc.params) />
+		</cfif> 
+		
+		<cfif structKeyExists(rc,"objparams") and isStruct(rc.objparams)and structKeyExists(rc.objparams,"conferenceIDList")>
+			<cfif isArray(rc.objparams.conferenceIDList)>
+				<cfset rc.idlist = arrayToList(rc.objparams.conferenceIDList) />
+			<cfelseif isSimpleValue(rc.objparams.conferenceIDList) and len(rc.objparams.conferenceIDList) eq 35>
+				<cfset rc.idlist = rc.objparams.conferenceIDList />
+			</cfif>
 		</cfif>
 
-		<cfset rc.objparams = params />
 		<cfset rc.aConferences = aConferences />
-		<cfparam name="rc.params.conferenceIDList" default="">
 	</cffunction>	
-
-
 </cfcomponent>

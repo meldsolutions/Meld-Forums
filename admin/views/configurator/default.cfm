@@ -11,7 +11,7 @@
         <cfloop from="1" to="#ArrayLen(rc.aConferences)#" index="rc.x">
 			<cfset rc.conferenceBean = rc.aConferences[rc.x] />
 			<li><input type="checkbox" class="objectParam" name="conferenceIDList" value="#rc.conferenceBean.getConferenceID()#"
-			<cfif listContains(rc.params.conferenceIDList,rc.conferenceBean.getConferenceID())> CHECKED="CHECKED"</cfif>
+			<cfif listContains(rc.idlist,rc.conferenceBean.getConferenceID())> CHECKED="CHECKED"</cfif>
 			> #rc.conferenceBean.getName()#</li>
 		</cfloop>
         </ul>
