@@ -342,14 +342,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfquery name="qChange" datasource="#variables.dsn#" username="#variables.dsnusername#"  password="#variables.dsnpassword#">
 			INSERT INTO
 				#variables.dsnprefix#mf_subscribe
-				(subscribeID,userID,threadID,dateCreate,dateLastUpdate)
+				(subscribeID,userID,threadID,dateCreate,dateLastUpdate,isEmail)
 			VALUES
 				(
 				<cfqueryparam value="#createUUID()#" CFSQLType="cf_sql_char" />,
 				<cfqueryparam value="#arguments.userID#" CFSQLType="cf_sql_char" />,
 				<cfqueryparam value="#arguments.threadID#" CFSQLType="cf_sql_char" />,
 				<cfqueryparam value="#createODBCDateTime(now())#" CFSQLType="cf_sql_timestamp" />,
-				<cfqueryparam value="#createODBCDateTime(now())#" CFSQLType="cf_sql_timestamp" />
+				<cfqueryparam value="#createODBCDateTime(now())#" CFSQLType="cf_sql_timestamp" />,
+				0
 				)
 		</cfquery>
 
@@ -399,14 +400,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfquery name="qChange" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
 			INSERT INTO
 				#variables.dsnprefix#mf_subscribe
-				(subscribeID,userID,forumID,dateCreate,dateLastUpdate)
+				(subscribeID,userID,forumID,dateCreate,dateLastUpdate,isEmail)
 			VALUES
 				(
 				<cfqueryparam value="#createUUID()#" CFSQLType="cf_sql_char" />,
 				<cfqueryparam value="#arguments.userID#" CFSQLType="cf_sql_char" />,
 				<cfqueryparam value="#arguments.forumID#" CFSQLType="cf_sql_char" />,
 				<cfqueryparam value="#createODBCDateTime(now())#" CFSQLType="cf_sql_timestamp" />,
-				<cfqueryparam value="#createODBCDateTime(now())#" CFSQLType="cf_sql_timestamp" />
+				<cfqueryparam value="#createODBCDateTime(now())#" CFSQLType="cf_sql_timestamp" />,
+				0
 				)
 		</cfquery>
 		<cfreturn true>
