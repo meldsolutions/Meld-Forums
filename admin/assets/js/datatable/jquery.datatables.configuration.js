@@ -153,6 +153,7 @@ $(document).ready(function() {
 					aoData.push( { "name": "criteria_" + nCol,"value": nVal} );
 				}
 			}
+			aoData.push( { "name": "nca","value": Math.floor(Math.random()*9999999)} );
 
 
 //			aoData.push( { "name": iTotalRecords,"value": json.iTotalRecords} );

@@ -679,16 +679,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfif variables.dsntype eq "mssql"> 	
 				TOP  #( Ceiling(Val(arguments.pageBean.getPos())) + Ceiling(Val(arguments.pageBean.getSize())) )#
 			</cfif>
-				threadID,postID
+				mfpost.threadID,mfpost.postID
 			FROM
-				#variables.dsnprefix#mf_post
+				#variables.dsnprefix#mf_post mfpost
+			JOIN
+				#variables.dsnprefix#mf_thread mfthread
+			ON
+				(mfpost.threadID = mfthread.threadID)
+			JOIN
+				#variables.dsnprefix#mf_forum mfforum
+			ON
+				(mfthread.forumID = mfforum.forumID)
 			GROUP BY
-				threadID
+				mfpost.threadID
 				<cfif variables.dsntype eq "mssql">
-				,postID,datelastupdate
+				,mfpost.postID,mfpost.datelastupdate
 				</cfif>
 			ORDER BY
-				dateLastUpdate DESC			
+				mfpost.dateLastUpdate DESC			
 			<cfif variables.dsntype eq "mysql">
 				LIMIT <cfif len(arguments.pageBean.getPos())><cfqueryparam value="#arguments.pageBean.getPos()#" CFSQLType="cf_sql_integer"  />,</cfif> <cfqueryparam value="#arguments.pageBean.getSize()#" CFSQLType="cf_sql_integer"  />
 			</cfif>
