@@ -89,6 +89,11 @@
 	    configuratorInit="initConfConfigurator"
 	    configuratorJS="forum/assets/js/confConfigurator.js"
 	    persist="false" />
+	<displayobject
+	    name="Meld Forums: Widgets"
+	    displaymethod="renderApp"
+	    component="widget.display.displayManager"
+	    persist="false" />
 </displayobjects>
 
 </plugin>
