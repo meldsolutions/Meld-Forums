@@ -14,7 +14,7 @@
 				<input class="text" type="text" name="forumbean_title" id="forumbean_title" value="#form.forumbean_title#" size="30" maxlength="100" data-required="true" data-validate="string" data-message="#rc.mmRBF.key('forumtitle','validation')#" />
 			</li>
 			<li>
-				<label for="forumbean_name">#rc.mmRBF.key('friendlyname')#<a href="##" class="tooltip"><span>#rc.mmRBF.key('friendlyname','tip')#</span>&nbsp;</a> <span class="doShowHide" onclick="doClickShowHide('friendlyShowHide',false,'forumbean_friendlyname')">#rc.mmRBF.key('show')#</span></label>
+				<label for="forumbean_name">#rc.mmRBF.key('friendlyname')#<a href="##" class="tooltip"><span>#rc.mmRBF.key('friendlyname','tip')#</span>&nbsp;</a> <div class="doShowHide" onclick="doClickShowHide('friendlyShowHide',false,'forumbean_friendlyname')">#rc.mmRBF.key('show')#</div></label>
 				<div id="friendlyShowHide" style="display: none">
 				<input class="text" type="text" name="forumbean_friendlyname" id="forumbean_friendlyname" value="#form.forumbean_friendlyname#" size="30" maxlength="100" />
 				</div>

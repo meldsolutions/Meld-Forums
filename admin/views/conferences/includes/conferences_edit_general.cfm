@@ -14,7 +14,7 @@
 				<input class="text" type="text" name="conferencebean_title" id="conferencebean_title" value="#form.conferencebean_title#" size="30" maxlength="100" data-required="true" data-validate="string" data-message="#rc.mmRBF.key('conferencetitle','validation')#" />
 			</li>
 			<li>
-				<label for="conferencebean_name">#rc.mmRBF.key('friendlyname')#<a href="##" class="tooltip"><span>#rc.mmRBF.key('friendlyname','tip')#</span>&nbsp;</a> <span class="doShowHide" onclick="doClickShowHide('friendlyShowHide',false,'conferencebean_friendlyname')">#rc.mmRBF.key('show')#</span></label>
+				<label for="conferencebean_name">#rc.mmRBF.key('friendlyname')#<a href="##" class="tooltip"><span>#rc.mmRBF.key('friendlyname','tip')#</span>&nbsp;</a> <div class="doShowHide" onclick="doClickShowHide('friendlyShowHide',false,'conferencebean_friendlyname')">#rc.mmRBF.key('show')#</div></label>
 				<div id="friendlyShowHide" style="display: none">
 				<input class="text" type="text" name="conferencebean_friendlyname" id="conferencebean_friendlyname" value="#form.conferencebean_friendlyname#" size="30" maxlength="100" />
 				</div>
