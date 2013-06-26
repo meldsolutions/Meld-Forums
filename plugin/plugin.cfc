@@ -49,7 +49,9 @@
 			<cfreturn>
 		</cfif>
 
-		<cfif not isUserInRole("s2")>
+		<cfinclude template="./config.cfm" />
+		
+		<cfif not $.currentUser().isSuperUser()>
 			<cffile action="append" file="#expandPath("../")#/install/log.txt" output="#now()#: Must be Super User to install" addnewline="true" >
 			<cflocation url="./?ecode=3000" addtoken="false">
 		</cfif>
