@@ -52,7 +52,7 @@
 		<cfinclude template="./config.cfm" />
 		
 		<cfif not $.currentUser().isSuperUser()>
-			<cffile action="append" file="#expandPath("../")#/install/log.txt" output="#now()#: Must be Super User to install" addnewline="true" >
+			<!---<cffile action="append" file="#expandPath("../")#/install/log.txt" output="#now()#: Must be Super User to install" addnewline="true" >--->
 			<cflocation url="./?ecode=3000" addtoken="false">
 		</cfif>
 		<!--- clean up in case it stalled --->
@@ -111,14 +111,14 @@
 				<cfif errorType neq "database">
 					<cfset error = true>
 				</cfif>
-				<cffile action="append" file="#expandPath("../")#/install/log.txt" output="#now()#: #cfcatch.message# - #cfcatch.detail#" addnewline="true" >
+				<!---<cffile action="append" file="#expandPath("../")#/install/log.txt" output="#now()#: #cfcatch.message# - #cfcatch.detail#" addnewline="true" >--->
 				<cfdump var="#cfcatch#"><cfabort>
 			</cfcatch>
 			<cfcatch type="any">
 				<!--- if an error is not caught then catch it anyways and log it to a file for review --->
 				<cfset errorType = "unknown" />
 				<cfset error = true>
-				<cffile action="append" file="#expandPath("../")#/install/log.txt" output="#now()#: #cfcatch.message# - #cfcatch.detail#" addnewline="true" >
+				<!---<cffile action="append" file="#expandPath("../")#/install/log.txt" output="#now()#: #cfcatch.message# - #cfcatch.detail#" addnewline="true" >--->
 				<cfdump var="#cfcatch#"><cfabort>
 			</cfcatch>
 		</cftry>
@@ -142,8 +142,14 @@
 		</cftry>
 
 		<!--- get selected DB type --->
-		<cffile action="read" file="#expandPath("../")#/install/db/#dsntype#.sql" variable="sql" />
-				
+		<cfif fileExists("#expandPath("../")#/install/db/#dsntype#.sql")>
+			<cffile action="read" file="#expandPath("../")#/install/db/#dsntype#.sql" variable="sql" />
+		<cfelseif fileExists("#expandPath("../MeldForums")#/install/db/#dsntype#.sql")>
+			<cffile action="read" file="#expandPath("../MeldForums")#/install/db/#dsntype#.sql" variable="sql" />
+		<cfelse>
+			<cffile action="read" file="#expandPath("/MeldForums")#/install/db/#dsntype#.sql" variable="sql" />
+		</cfif>
+			
 		<cfset sql = replacenocase(sql,"||PRE||",dsnprefix,"all")>
 
 		<cfset aSql = ListToArray(sql, ';')>
@@ -161,7 +167,7 @@
 		                </cfquery>
 	                </cfif>
 	                <cfcatch>
-						<cffile action="append" file="#expandPath("../")#/install/log.txt" output="#now()#: #cfcatch.message# - #cfcatch.detail#" addnewline="true" >
+						<!---<cffile action="append" file="#expandPath("../")#/install/log.txt" output="#now()#: #cfcatch.message# - #cfcatch.detail#" addnewline="true" >--->
 					</cfcatch>
 					</cftry>
 	            </cfloop>
