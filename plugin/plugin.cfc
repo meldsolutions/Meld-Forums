@@ -146,6 +146,8 @@
 			<cffile action="read" file="#expandPath("../")#/install/db/#dsntype#.sql" variable="sql" />
 		<cfelseif fileExists("#expandPath("../MeldForums")#/install/db/#dsntype#.sql")>
 			<cffile action="read" file="#expandPath("../MeldForums")#/install/db/#dsntype#.sql" variable="sql" />
+		<cfelseif fileExists("#expandPath("/plugins/MeldForums")#/install/db/#dsntype#.sql")>
+			<cffile action="read" file="#expandPath("/plugins/MeldForums")#/install/db/#dsntype#.sql" variable="sql" />
 		<cfelse>
 			<cffile action="read" file="#expandPath("/MeldForums")#/install/db/#dsntype#.sql" variable="sql" />
 		</cfif>
