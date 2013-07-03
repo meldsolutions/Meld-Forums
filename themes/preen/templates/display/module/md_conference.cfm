@@ -15,7 +15,11 @@
 	<tr>
 		<th colspan="#local.columns#" class="mf-masthead">
 			<span class="mf-wrapper">
+				<cfif arraylen(local.aConferences) gt 1>
 				<h3><a href="#rc.MFBean.getconferenceLink(local.conferenceBean)#/">#local.conferenceBean.getTitle()#</a></h3>
+				<cfelse>
+				<h3>#local.conferenceBean.getTitle()#</h3>
+				</cfif>
 				<cfif len( local.conferenceBean.getDescription() )><div class="description">#local.conferenceBean.getDescription()#</div></cfif>
 			</span>
 		</th>
