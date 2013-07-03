@@ -3,7 +3,7 @@
 	<cfset rc		= local.rc />
 
 </cfsilent><cfoutput>
-<tr class="forumhead clearfix">
+<tr class="forumhead">
 	<th colspan="#local.columns#" class="mf-masthead">
 		<span class="mf-wrapper">
 		<cfif len(local.eventContent['forumdescription'])>
