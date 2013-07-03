@@ -34,6 +34,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="search" required="false" type="string" default="" />
 		<cfargument name="searchtype" required="false" type="string" default="" />
 		<cfargument name="range" required="false" type="numeric" default="5" />
+		<cfargument name="siteID" required="false" type="string" default="" />
 
 		<cfset variables.$						= arguments.$ />
 		<cfset variables.pageManager			= arguments.pageManager />
@@ -47,6 +48,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset setSearchType( arguments.searchtype ) />
 		<cfset setURL( "" ) />
 		<cfset setRange( arguments.range ) />
+		<cfset setSiteID( arguments.siteID ) />
 		
 		<cfset getStart() />
 		
@@ -207,7 +209,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	</cffunction>
 	<cffunction name="setRange" returntype="void" access="public" output="false">
 		<cfargument name="Range" type="numeric" required="true">
-
 		<cfset variables.instance.Range = arguments.Range />
 	</cffunction>
+
+	<cffunction name="getSiteID" returntype="string" access="public" output="false">
+		<cfreturn variables.instance['SiteID']>
+	</cffunction>
+	<cffunction name="setSiteID" returntype="void" access="public" output="false">
+		<cfargument name="SiteID" type="string" required="true">
+		<cfset variables.instance.SiteID = arguments.SiteID />
+	</cffunction>
+	
+	
+	
 </cfcomponent>

@@ -1,4 +1,4 @@
-<!---
+﻿<!---
 This file is part of the Meld Forums application.
 
 Meld Forums is licensed under the GPL 2.0 license
@@ -18,24 +18,31 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 --->
-<cfcomponent extends="controller">
+<cfsilent>
+	<!--- headers --->
+	<cfset local.sStr = "" />
+</cfsilent><cfoutput>
+<!--- begin content --->
 
-	<cffunction name="before" access="public" returntype="void" output="false">
-		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
-		<cfset super.before( argumentCollection=arguments ) />
-	</cffunction>
-
-	<cffunction name="loginout" access="public" returntype="void" output="false">
-		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
-
-		<cfif rc.MFBean.isLoggedIn()>
-			<cfset rc.userBean	= rc.MFBean.getUserCache().getUser( $.currentUser().getUserID() )>
-		</cfif>		
-	</cffunction>
-
-	<cffunction name="sidenav" access="public" returntype="void" output="false">
-		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
-
-			
-	</cffunction>
-</cfcomponent>
+<div id="meld-forums-widget">
+	<!-- CONTENT HERE -->
+	<cfsilent>
+	<cfset local.event = rc.mmEvents.createEvent( rc.$ ) />
+	<cfset local.sStr = "" />
+	<cfset local.sStr = rc.mmEvents.renderEvent( rc.$,"onMeldForumsWidgetsidenavRender",local.event ) />
+	</cfsilent>
+	<cfif len(local.sStr)>
+		#local.sStr#
+	<cfelse>
+		<cftry>
+		<cfinclude template="#rc.MFBean.getThemeDirectory()#/templates/widget/sidenav.cfm">
+		
+		<cfcatch>
+			/MeldForums/[theme]/templates/widget/sidenav.cfm] missing
+		</cfcatch>
+		</cftry>
+		
+	</cfif>
+</div>	
+<!--- end content --->
+</cfoutput> 

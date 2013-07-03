@@ -158,7 +158,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfreturn structkeyexists( variables.values,arguments.key) or structkeyexists( variables.customvalues,arguments.key) />
 	</cffunction>
 	<cffunction name="getAllValues" access="public" output="false" returntype="struct">
-		<cfreturn variables.values />
+		<cfreturn getMemento() />
 	</cffunction>
 	<cffunction name="getAllCustomValues" access="public" output="false" returntype="struct">
 		<cfreturn variables.customvalues />
