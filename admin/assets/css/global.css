@@ -146,5 +146,12 @@
 	background-image: url('../images/user.gif');
 }
 
+.sortable { list-style-type: none; margin: 0; padding: 0; width: 300px; }
+.sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px;border: 1px solid #ccc; background-color: #fafafa; }
+.sortable li span { position: absolute; margin-left: -1.3em; }
+
+
 /* @end general
 =================== */
+
+

@@ -27,4 +27,4 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 <cfset framework.home="main.default">
 <cfset framework.reload="reload">
 <cfset framework.generateSES=false>
-<cfset framework.reloadApplicationOnEveryRequest=false>
+<cfset framework.reloadApplicationOnEveryRequest=true>

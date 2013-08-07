@@ -31,6 +31,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 	</cffunction>
 
+	<cffunction name="reorder" access="public" returntype="void" output="false">
+		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
+
+		<cfset rc.mmBC.addCrumb( rc,rc.mmRBF.key('conferences'),"?action=conferences" )>
+		<cfset rc.mmBC.addCrumb( rc,rc.mmRBF.key('reorder') )>
+
+		<!--- check if a button was clicked --->
+		<cfif StructKeyExists(rc,"sortorder") and len(rc.sortOrder) gt 0>
+			<cfset getBeanFactory().getBean("conferenceService").setSortOrder( rc.sortOrder ) />
+			<cflocation url="?action=conferences" addtoken="false">
+		</cfif>
+		
+		<cfset rc.aConferences = getBeanFactory().getBean("conferenceService").search( criteria=StructNew(),orderby="OrderNo ASC" ) /> 
+	</cffunction>
+
 	<cffunction name="edit" access="public" returntype="void" output="false">
 		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
 	

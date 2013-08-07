@@ -26,6 +26,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset  actionCheck( arguments.rc )>
 	</cffunction>
 
+	<cffunction name="reorder" access="public" returntype="void" output="false">
+		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
+
+		<cfset rc.mmBC.addCrumb( rc,rc.mmRBF.key('forums'),"?action=forums" )>
+		<cfset rc.mmBC.addCrumb( rc,rc.mmRBF.key('reorder') )>
+		<cfparam name="rc.conferenceID" default="" />
+
+		<!--- check if a button was clicked --->
+		<cfif StructKeyExists(rc,"sortorder") and len(rc.sortOrder) gt 0>
+			<cfset getBeanFactory().getBean("ForumService").setSortOrder( rc.sortOrder ) />
+			<cflocation url="?action=Forums&conferenceID=#rc.conferenceID#" addtoken="false">
+		</cfif>
+		
+		<cfset rc.aForums = getBeanFactory().getBean("ForumService").search( criteria={conferenceID=rc.conferenceID},orderby="OrderNo ASC" ) /> 
+	</cffunction>
+
 	<cffunction name="edit" access="public" returntype="void" output="false">
 		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
 	

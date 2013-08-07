@@ -383,6 +383,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfreturn getForumGateway().getCrumbData(argumentCollection=arguments) />
 	</cffunction>
 
+
+	<cffunction name="setSortOrder" access="public" output="false" returntype="void">
+		<cfargument name="sortIDs" type="string" required="false" default="" />
+		
+		<cfreturn getForumGateway().setSortOrder(argumentCollection=arguments) />
+	</cffunction>
+
 <!---^^CUSTOMEND^^--->
 
 	<cffunction name="setThreadService" access="public" returntype="any" output="false">

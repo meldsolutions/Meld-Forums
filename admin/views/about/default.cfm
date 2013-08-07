@@ -19,9 +19,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 --->
 <cfoutput>
-<div id="meld-body">
-	<h3>About Meld Forums</h3>
-	<p>Meld Forums is a Mura CMS plugin, developed by Meld Solutions Inc.</p>
-	<p><strong>Version: </strong> #rc.pluginConfig.getVersion()#</p> 
+<div class="row">
+	<div class="span12">
+		<h3>About Meld Forums</h3>
+		<p>Meld Forums is a Mura CMS plugin, developed by Meld Solutions Inc.</p>
+		<p><strong>Version: </strong> #rc.pluginConfig.getVersion()#</p> 
+	</div>
 </div>
 </cfoutput>

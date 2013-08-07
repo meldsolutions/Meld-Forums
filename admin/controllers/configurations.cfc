@@ -60,8 +60,10 @@
 			<cfset sArgs.configurationID	= arguments.rc.configurationID />
 			<cfset configurationBean		= configurationService.duplicateConfiguration( argumentCollection=sArgs ) />
 
+			<cfset configurationBean.setIsMaster(0) />
+
 			<cfset mmBreadCrumbs.addCrumb( rc,configurationBean.getName() )>
-			<cfset mmBreadCrumbs.addCrumb( rc,mmResourceBundle.key('editcopy') )>
+			<cfset mmBreadCrumbs.addCrumb( rc,mmResourceBundle.key('edit') )>
 		<cfelseif isDefined( "arguments.rc.configurationID" )>
 			<cfset configurationBean = configurationService.getConfiguration( configurationID = arguments.rc.configurationID ) />
 			<cfif configurationBean.beanExists()>

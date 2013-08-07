@@ -19,8 +19,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 --->
 <cfoutput>
-<div id="meld-body">
-	<h3>Meld Forums Documentation</h3>
-	<p>Documentation for the plugin can be found at <a href="https://github.com/meldsolutions/Meld-Forums/wiki">GitHub</a>.</p>
+<div class="row">
+	<div class="span12">
+		<h3>Meld Forums Documentation</h3>
+		<p>Documentation for the plugin can be found at <a href="https://github.com/meldsolutions/Meld-Forums/wiki">GitHub</a>.</p>
+	</div>
 </div>
 </cfoutput>

@@ -1,3 +1,5 @@
+<cfimport prefix="ui" taglib="../../ui" />
+
 <cfsilent>
 	
 	<!--- rc --->
@@ -10,9 +12,15 @@
 </cfsilent><cfoutput>
 <!--- global menu --->
 <!--- begin content --->
-<div id="meld-body">
+<div class="row">
+	<div class="span12">
+	<a href="#buildURL('admin:configurations.edit')#&copy=true&ConfigurationID=00000000-0000-0000-0000000000000001" title="#rc.mmRBF.key('addnewconfiguration','tip')#" class="btn pull-right"><i class="icon-plus-sign"></i> #rc.mmRBF.key('addnewconfiguration')#</a>
+	</div>
+</div>
+<br/>
 	<!-- CONTENT HERE -->
 	#view("configurations/includes/default_list")#
+	</div>	
 </div>	
 <!--- end content --->
 </cfoutput> 

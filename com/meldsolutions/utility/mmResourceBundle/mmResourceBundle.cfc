@@ -80,6 +80,37 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfreturn key( argumentCollection=arguments ) />
 	</cffunction>
 
+
+	<cffunction name="keyExists" access="public" returntype="boolean" output="false">
+		<cfargument name="value" 	type="string" required="true" />
+		<cfargument name="context" 	type="string" required="false" default="label" />
+		<cfargument name="locale" 	type="string" required="false" default="#getBaseRBLocale()#" />
+
+		<cfset var fullKey		= getApplicationKey() />
+		<cfset var keyValue		= "" />
+
+		<cfif not getRBValid()>
+			<cfreturn arguments.value & "_z" />
+		</cfif>
+
+		<cfif arguments.context eq "mura">
+			<cfset fullKey = arguments.value />
+		<cfelse>
+			<cfset fullKey = fullKey & "." & arguments.context />
+			<cfset fullKey = fullKey & "." & arguments.value />
+		</cfif>
+		
+		<cfset keyValue = getRBFactory().getKeyValue(arguments.locale,fullKey) />
+
+		<!--- 
+		<cfdump var="#arguments#" />
+				<cfoutput>#fullkey#|#keyvalue#</cfoutput>
+				<cfabort /> --->
+		
+		<cfreturn right(keyValue,8) neq "_missing" and not getHasCustom() />
+	</cffunction>
+
+
 	<cffunction name="setKey" access="public" returntype="string" output="false">
 		<cfargument name="name" type="string" required="true" />
 		<cfargument name="value" type="string" required="true" />

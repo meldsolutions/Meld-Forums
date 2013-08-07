@@ -1,0 +1,169 @@
+/*
+<!---
+||PACKAGENAMELICENSE||
+--->
+*/
+/* 	@BEGIN ms-datatable  */
+#ms-datatable_wrapper {
+	width: 100%;
+}
+#ms-datatable {
+	border-collapse: collapse;
+	margin: 0;
+}
+#ms-datatable .highlight {
+	background-color: #ffd1bb !important;
+}
+#ms-datatable td {
+	padding: 1px 4px;
+	white-space: nowrap;
+	width: 1%;
+	border-right: 1px solid #eee;
+}
+#ms-datatable td.nopad {
+	padding: 0 0 0 5px;
+}
+#ms-datatable tr.odd td {
+	background-color: #eee;
+}
+#ms-datatable .varWidth {
+	width: 100% !important;
+}
+#ms-datatable .minWidth {
+	min-width: 70px !important;
+}
+#ms-datatable .bitWidth {
+	min-width: 40px !important;
+}
+#ms-datatable tr.even td {
+	background-color: #f7f7f7;
+}
+#ms-datatable td {
+	float: none;
+	text-align: left;
+}
+#ms-datatable td.center {
+	float: none;
+	text-align: center;
+}
+#ms-datatable td.right {
+	float: none;
+	text-align: right;
+}
+#ms-datatable th {
+	vertical-align: top;
+	text-align: left;
+	padding: 5px;
+	white-space: nowrap;
+	border: 0;
+	border-right: 1px solid #eee;
+}
+#ms-datatable th.menu,#ms-datatable th.nosort {
+}
+#ms-datatable th.nosort span {
+	margin: 0;
+	padding: 0;
+	width: 0;
+}
+#ms-datatable th span.css_right {
+	margin: 0 0px 0 0;
+	float: right;
+}
+#ms-datatable a {
+	text-decoration: underline;
+}
+#ms-datatable_wrapper .msDataMasthead {
+	text-align: right;
+	background-color: #ff0000;
+	padding: 3px;
+}
+#ms-datatable_wrapper .bottom,#ms-datatable_wrapper .top {
+	background-color: #e15500 !important;
+	padding: 4px 3px;
+	margin: 0 0 0 -1px;
+	border: 0;
+}
+#ms-datatable_paginate {
+	margin: 1px 0 0 0;
+	padding: 2px 0;
+	float: left;
+	text-align: left;
+	width: 50%;
+}
+#ms-datatable_filter {
+	padding: 1px 0 0 0;
+	float: right;
+}
+#ms-datatable_wrapper .paging_full_numbers span.fg-button ,
+#ms-datatable_wrapper .paging_full_numbers span.paginate_active {
+	border: 1px solid #ddd !important;
+	padding: 3px 6px;
+}
+#ms-datatable_wrapper #ms-datatable_length {
+	display: block;
+	float: left;
+	margin: 0;
+}
+#ms-datatable_wrapper #ms-datatable_info {
+	display: block;
+	float: right;
+	margin: 2px 0 0 0;
+}
+#ms-datatable_wrapper #ms-datatable_length {
+	display: block;
+	float: right;
+	height: 20px;
+}
+#ms-datatable_wrapper .ui-widget-header {
+	height: 20px;
+	margin: 0 0 0 -1px;
+	padding: 3px 5px;
+}
+#ms-datatable_wrapper .paging_full_numbers span.paginate_active {
+	color: #fff !important;
+	border: 1px solid #e15500 !important;	
+	background-color: #e15500 !important;
+}
+#ms-datatable td.administration {
+	margin: 2px;
+	width: 10px !important;
+}
+#ms-datatable td.administration li.date {
+	background: url(meld/cal_24.png) no-repeat;
+}
+#ms-datatable input {
+	padding: 3px 0 3px 2px;
+	font-size: 100%;
+	margin: 0 0 0 0;
+	border: 1px solid #666;
+	width: 99%;
+	height: 12px;
+}
+#ms-datatable input.short {
+	width: 80%;
+}
+#ms-datatable select {
+	font-size: 100%;
+	border: 1px solid #666;
+	height: 20px;
+}
+#ms-datatable_wrapper {
+	position: relative;
+}
+#ms-datatable_wrapper .dataTables_processing {
+	position: absolute;
+	opacity: .80;
+	filter:Alpha(Opacity=80);
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	text-align: center;
+	color: #000;
+	font-size: 12px;
+	padding: 5px 0 5px;
+}
+#ms-datatable_processing {
+	font-weight: bold;
+	color: #fff !important;
+}
+/* 	@END ms-datatable  */

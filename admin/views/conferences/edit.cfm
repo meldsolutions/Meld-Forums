@@ -1,3 +1,4 @@
+<cfimport prefix="ui" taglib="../../ui" />
 <cfsilent>
 	
 	<!--- rc --->
@@ -7,37 +8,38 @@
 </cfsilent><cfoutput>
 <!--- global menu --->
 <!--- begin content --->
-<div id="meld-body">
-	<!-- CONTENT HERE -->
-<form id="meld-edit-form" class="meld-form" method="post" action="index.cfm">
-<input type="hidden" name="action" value="conferences.edit">
-<input type="hidden" name="conferenceID" value="#rc.conferenceBean.getConferenceID()#">
-<div id="msTabs">
-	<ul>
-		<li><a id="msTabs-General-Tab" href="##msTabs-General">#rc.mmRBF.key('general')#</a></li>
-		<li><a id="msTabs-Options-Tab" href="##msTabs-Options">#rc.mmRBF.key('options')#</a></li>
-		<li><a id="msTabs-Config-Tab" href="##msTabs-Config">#rc.mmRBF.key('configuration')#</a></li>
-	</ul>
-	<div id="msTabs-panels">
-		#view("conferences/includes/conferences_edit_general")#
-		#view("conferences/includes/conferences_edit_options")#
-		#view("conferences/includes/conferences_edit_config")#
-	</div>
-	<div>
-		<ul class="form-buttons">
-			<li><input name="btaction" type="submit" class="submit ui-state-default" value="cancel"></li>
-			<cfif rc.conferenceBean.beanExists()>
-				<li><input name="btaction" type="submit" class="submit ui-state-default" value="update"></li>
-				<li class="right">
-					<input type="hidden" id="btdeleteconfirm" name="btdeleteconfirm" value="" />
-					<input data-delete="#rc.mmRBF.key('delete')#" data-cancel="#rc.mmRBF.key('cancel')#" data-title="#rc.mmRBF.key('delete')#" data-message="#rc.mmRBF.key('deleteconference-msg')#" id="btdelete" name="btaction" type="submit" class="submit ui-state-highlight" value="delete">
-				</li>
-			<cfelse>
-				<li><input name="btaction" type="submit" class="submit ui-state-default" value="save"></li>
-			</cfif>
-		</ul>
-	</div>
-</div>	
+	<cfif rc.conferenceBean.getBeanExists()>
+		<form action="#buildURL('admin:conferences.edit?btaction=update')#" method="post">	
+	<cfelse>
+		<form action="#buildURL('admin:conferences.edit?btaction=save')#" method="post">	
+	</cfif>
+
+	<input type="hidden" name="conferenceID" value="#rc.conferenceBean.getConferenceID()#">
+			
+	<span id="msg"></span>
+		
+	<div class="tabbable tabs-left">
+
+		<ul class="nav nav-tabs tabs initActiveTab">
+			<li><a href="##msTabs-General" data-toggle="tab"><span>#rc.mmRBF.key('general')#</span></a></li>
+			<li><a href="##msTabs-Config" data-toggle="tab"><span>#rc.mmRBF.key('configuration')#</span></a></li>
+		</ul><!--- /nav-tabs --->
+
+		<div class="tab-content row-fluid">
+			#view("conferences/includes/conferences_edit_general")#
+			#view("conferences/includes/conferences_edit_config")#
+	
+			<div class="load-inline tab-preloader"></div>
+	
+			<div class="form-actions">
+			
+				<a href="#buildURL('admin:conferences.default')#" class="btn"><i class="icon-remove"></i> #rc.mmRBF.key('cancel')#</a>
+				<button type="submit" class="btn"><i class="icon-check"></i> #rc.mmRBF.key('save')#</button>
+				 
+			</div><!--- /form-actions --->
+	
+		</div>
+	</div>	
 </form>
 <!--- end content --->
 </cfoutput> 

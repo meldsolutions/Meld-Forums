@@ -1,20 +1,20 @@
 <cfoutput>
-	<table class="mf-dashboard-table">
+	<table class="table table-striped table-condensed table-bordered mura-table-grid">
 		<tr>
 			<th colspan="2">
 			#rc.mmRBF.key('counts')#
 			</th>
 		</tr>
 		<tr>
-			<td class="varWidth">
+			<td >
 				#rc.mmRBF.key('conferences')#
 			</td>
 			<td>
 				#rc.conferenceCount#
 			</td>
 		</tr>
-		<tr class="alt">
-			<td class="varWidth">
+		<tr>
+			<td >
 				#rc.mmRBF.key('forums')#
 			</td>
 			<td>
@@ -22,15 +22,15 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="varWidth">
+			<td >
 				#rc.mmRBF.key('threads')#
 			</td>
 			<td>
 				#rc.threadCount#
 			</td>
 		</tr>
-		<tr class="alt">
-			<td class="varWidth">
+		<tr>
+			<td >
 				#rc.mmRBF.key('posts')#
 			</td>
 			<td>

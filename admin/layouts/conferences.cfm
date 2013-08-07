@@ -19,26 +19,45 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 --->
 <cfsilent>
+	<!--- rc --->
 	<!--- headers --->
 </cfsilent><cfoutput>
-<div id="meld-plugin">
-	<div id="meld-content">
-		<div id="meld-bc" class="clearfix">
+<div class="plugincontent">
+	<div class="row">
+		<div class="span12">
 			#view("/global/bc")#
 		</div>
+	</div>
+	<div class="row">
+		<div class="span12">
 		<div id="meld-logo" class="clearfix">
 			<a href="http://www.meldsolutions.com" target="_new"></a>
 		</div>
-		<div id="meld-nav" class="clearfix">
-			#view("/global/menu")#
 		</div>
-		<!--- error template --->
-		<cfif structKeyExists(rc,"error")>
-		<div id="meld-error" class="section clearfix">
-			#view("/global/error")#
-		</div>
-		</cfif>
-		#body#
 	</div>
+
+		#view("/global/menu")#
+
+
+	<cfif structKeyExists(rc,"error")>
+		<div id="meld-error" class="section clearfix">
+			<cfif rc.errorBean.hasErrors("notice")>
+				<div class="notice">
+					#rc.errorBean.hasErrors.displayErrorsHTML("notice")#
+				</div>
+			</cfif>
+			<cfif rc.errorBean.hasErrors("custom")>
+				<div class="error">
+					#rc.errorBean.displayErrorsHTML("custom")#
+				</div>
+			</cfif>
+			<cfif rc.errorBean.hasErrors("other")>
+				<div class="error">
+					#rc.errorBean.displayErrorsHTML("other")#
+				</div>
+			</cfif>
+		</div>
+	</cfif>
 </div>
+	#body#
 </cfoutput>

@@ -6,16 +6,16 @@
 <!--- global menu --->
 <!--- begin content --->
 <br />
-<div id="meld-body">
+<div>
 	<!-- CONTENT HERE -->
-	<div class="mf-dashboard-columns clearfix">
-		<div class="col left">
+	<div class="row">
+		<div class="span4">
 			<cfinclude template="includes/dsp_dashboard_posts.cfm" />
 		</div>
-		<div class="col mid">
+		<div class="span4">
 			<cfinclude template="includes/dsp_dashboard_users.cfm" />
 		</div>
-		<div class="col right">
+		<div class="span4">
 			<cfinclude template="includes/dsp_dashboard_counts.cfm" />
 		</div>
 	</div>

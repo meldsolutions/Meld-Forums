@@ -18,8 +18,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 --->
+<cfimport prefix="ui" taglib="../ui" />
+
 <cfsilent>
 	<!--- headers --->
 	<cfinclude template="../includes/headers/global.cfm">
 </cfsilent>
-<cfoutput>#replace(application.pluginManager.renderAdminTemplate(body=body,pageTitle=rc.pluginConfig.getName(),jsLib="jquery"),"cPlugins","msPlugins")#</cfoutput>
+<cfoutput>#application.pluginManager.renderAdminTemplate(body=body,pageTitle=rc.pluginConfig.getName(),jsLib="jquery")#</cfoutput>
+
+<!--- this really should be at the bottom of the page as a whole, but this is not currently supported by Mura --->
+<ui:javascript files="#rc.$.globalConfig().getContext()#/plugins/#rc.pluginConfig.getDirectory()#/admin/assets/js/admin.js" />
+<ui:javascript files="#rc.$.globalConfig().getContext()#/plugins/#rc.pluginConfig.getDirectory()#/admin/assets/js/jquery.datatables.min.js" />
+<ui:javascript mode="output" /><!--- spit out the javascript --->

@@ -19,10 +19,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 --->
 <cfoutput>
-<div id="meld-body">
-	<h3>Meld Forums License</h3>
-	<pre>
-	<cfinclude template="/#rc.pluginConfig.getPackage()#/license.txt">
-	</pre>
+<div class="row">
+	<div class="span12">
+		<h3>Meld Forums License</h3>
+		<pre>
+		<cfinclude template="/#rc.pluginConfig.getPackage()#/license.txt">
+		</pre>
+	</div>
 </div>
 </cfoutput>

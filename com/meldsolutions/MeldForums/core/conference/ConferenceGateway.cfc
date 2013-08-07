@@ -418,6 +418,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfreturn qList.total />
 	</cffunction>
 
+	<cffunction name="setSortOrder" access="public" output="false" returntype="void">
+		<cfargument name="sortIDs" type="string" required="false" default="" />
+
+		<cfset var qList		= "" />
+		<cfset var iiX = 0 />
+		<cfset var aOrder = ListToArray( arguments.sortIDs ) />
+		
+		<cfloop from="1" to="#ArrayLen( aOrder )#" index="iiX">
+			<cfquery name="qList" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
+				UPDATE	#variables.dsnprefix#mf_conference
+				SET
+					orderNo = #iiX#
+				WHERE	
+					conferenceID = <cfqueryparam value="#aOrder[iiX]#" CFSQLType="cf_sql_varchar" maxlength="35" />
+			</cfquery>
+		</cfloop>
+	</cffunction>
+
 <!---^^CUSTOMEND^^--->
 
 	<cffunction name="setForumGateway" access="public" returntype="any" output="false">

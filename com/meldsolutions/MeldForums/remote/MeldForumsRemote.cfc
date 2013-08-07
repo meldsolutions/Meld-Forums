@@ -43,14 +43,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset sData['criteria']['siteid'] = session.siteID>
 
 		<!--- sortable columns, as per database query --->
-		<cfset sCols['0'] = "">
-		<cfset sCols['1'] = "name">
-		<cfset sCols['2'] = "isMaster">
-		<cfset sCols['3'] = "restrictreadgroups">
-		<cfset sCols['4'] = "restrictcontributegroups">
-		<cfset sCols['5'] = "restrictmoderategroups">
-		<cfset sCols['6'] = "doAttachments">
-		<cfset sCols['7'] = "isActive">
+		<cfset sCols['0'] = "name">
+		<cfset sCols['1'] = "isMaster">
+		<cfset sCols['2'] = "restrictreadgroups">
+		<cfset sCols['3'] = "restrictcontributegroups">
+		<cfset sCols['4'] = "restrictmoderategroups">
+		<cfset sCols['5'] = "doAttachments">
+		<cfset sCols['6'] = "isActive">
 
 		<cfset sCriteria = setCriteria( sData,sCols,1 ) />
 		<cfset sConfiguration = configurationService.search( argumentCollection=sCriteria )>
@@ -59,19 +58,29 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfset cConfiguration = sConfiguration.itemarray[iiX] />
 			<cfset aConfiguration	= ArrayNew(1) />
 			
-			<cfset ArrayAppend(aConfiguration,"
-			<ul class='table-buttons two'>
-			<li><span title='#mmResourceBundle.key('configurationcopy')#' class='sb-button ui-state-default'><a class='ui-icon ui-icon-copy' href='?action=configurations.edit&amp;copy=true&ConfigurationID=#cConfiguration.ConfigurationID#'></a></span></li>
-			<li><span title='#mmResourceBundle.key('configurationedit')#' class='sb-button ui-state-default'><a class='ui-icon ui-icon-pencil' href='?action=configurations.edit&amp;ConfigurationID=#cConfiguration.ConfigurationID#'></a></span></li>
-			</ul>
-			" ) />
 			<cfset ArrayAppend(aConfiguration,"<a title='#mmResourceBundle.key('configurationview')#' href='?action=configurations.edit&amp;ConfigurationID=#cConfiguration.ConfigurationID#'>#cConfiguration.name#</a>" ) />
-			<cfset ArrayAppend(aConfiguration, iif(cConfiguration.isMaster,de("*"),de("")) ) />
-			<cfset ArrayAppend(aConfiguration, iif(len(trim(cConfiguration.restrictreadgroups)),de("*"),de("")) ) />
-			<cfset ArrayAppend(aConfiguration, iif(len(trim(cConfiguration.restrictcontributegroups)),de("*"),de("")) ) />
-			<cfset ArrayAppend(aConfiguration, iif(len(trim(cConfiguration.restrictmoderategroups)),de("*"),de("")) ) />
-			<cfset ArrayAppend(aConfiguration, iif(cConfiguration.doAttachments,de("*"),de("")) ) />
+			<cfset ArrayAppend(aConfiguration, iif(cConfiguration.isMaster,de("<span class='bullet'>&bull;</span>"),de("")) ) />
+			<cfset ArrayAppend(aConfiguration, iif(len(trim(cConfiguration.restrictreadgroups)),de("<span class='bullet'>&bull;</span>"),de("")) ) />
+			<cfset ArrayAppend(aConfiguration, iif(len(trim(cConfiguration.restrictcontributegroups)),de("<span class='bullet'>&bull;</span>"),de("")) ) />
+			<cfset ArrayAppend(aConfiguration, iif(len(trim(cConfiguration.restrictmoderategroups)),de("<span class='bullet'>&bull;</span>"),de("")) ) />
+			<cfset ArrayAppend(aConfiguration, iif(cConfiguration.doAttachments,de("<span class='bullet'>&bull;</span>"),de("")) ) />
 			<cfset ArrayAppend(aConfiguration,mmResourceBundle.key("active"& cConfiguration.isActive )) />
+			<cfif cConfiguration.isMaster>
+				<cfset ArrayAppend(aConfiguration,"
+				<div>
+				<a title='#mmResourceBundle.key('copy')#' href='?action=configurations.edit&amp;copy=true&ConfigurationID=#cConfiguration.ConfigurationID#'><i class='icon-copy'></i></a>
+				<a title='#mmResourceBundle.key('edit')#' href='?action=configurations.edit&amp;ConfigurationID=#cConfiguration.ConfigurationID#'><i class='icon-pencil'></i></a>
+				</div>
+				" ) />
+			<cfelse>
+				<cfset ArrayAppend(aConfiguration,"
+				<div>
+				<a title='#mmResourceBundle.key('copy')#' href='?action=configurations.edit&amp;copy=true&ConfigurationID=#cConfiguration.ConfigurationID#'><i class='icon-copy'></i></a>
+				<a title='#mmResourceBundle.key('edit')#' href='?action=configurations.edit&amp;ConfigurationID=#cConfiguration.ConfigurationID#'><i class='icon-pencil'></i></a>
+				<a title='#mmResourceBundle.key('delete')#' href='?action=forums.edit&amp;configurationID=#cconfiguration.configurationID#'><i class='icon-remove-sign'></i></a>
+				</div>
+				" ) />
+			</cfif>
 			<cfset ArrayAppend(aConfigurationData,aConfiguration) />
 		</cfloop>
 
@@ -102,32 +111,39 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var sData			= mmFormTools.scopeFormSubmission( arguments,true,false )> <!--- data,skip empty,append global --->
 		<cfset var sCriteria		= StructNew() />
 
+
+
 		<!--- sortable columns, as per database query --->
-		<cfset sCols['0'] = "">
-		<cfset sCols['1'] = "name">
-		<cfset sCols['2'] = "forumcount">
-		<cfset sCols['3'] = "threadcount">
-		<cfset sCols['4'] = "isActive">
+		<cfset sCols['0'] = "name">
+		<cfset sCols['1'] = "forumcount">
+		<cfset sCols['2'] = "threadcount">
+		<cfset sCols['3'] = "isActive">
+		<cfset sCols['4'] = "orderno">
 
 		<cfset sData['criteria']['siteid'] = session.siteID>
 
 		<cfset sCriteria = setCriteria( sData,sCols,1 ) />
 		<cfset sConference = conferenceService.search( argumentCollection=sCriteria )>
 
+<a href="/plugins/MeldForums/index.cfm?action=conferences.edit&conferenceid=AA6A9653-BDFF-66DD-05208D5D640F0DAC">
+<i class="icon-pencil"></i>
+</a>
+
 		<cfloop from="1" to="#ArrayLen(sConference.itemarray)#" index="iiX">
 			<cfset cConference = sConference.itemarray[iiX] />
 			<cfset aConference	= ArrayNew(1) />
-			<cfset ArrayAppend(aConference,"
-			<ul class='table-buttons three'>
-			<li><span title='#mmResourceBundle.key('conferenceedit')#' class='sb-button ui-state-default'><a class='ui-icon ui-icon-pencil' href='?action=conferences.edit&amp;ConferenceID=#cConference.ConferenceID#'></a></span></li>
-			<li><span title='#mmResourceBundle.key('forumadd')#' class='sb-button ui-state-default'><a class='ui-icon ui-icon-plusthick' href='?action=forums.edit&amp;ConferenceID=#cConference.ConferenceID#'></a></span></li>
-			<li><span title='#mmResourceBundle.key('forumslist')#' class='sb-button ui-state-default'><a class='ui-icon ui-icon-folder-open' href='?action=forums&amp;ConferenceID=#cConference.ConferenceID#'></a></span></li>
-			</ul>
-			" ) />
-			<cfset ArrayAppend(aConference,"<a title='#mmResourceBundle.key('conferenceview')#' href='?action=forums&amp;ConferenceID=#cConference.ConferenceID#'>#cConference.name#</a>" ) />
+			<cfset ArrayAppend(aConference,"<a title='#mmResourceBundle.key('edit')#' href='?action=conferences.edit&amp;ConferenceID=#cConference.ConferenceID#'>#cConference.name#</a>" ) />
 			<cfset ArrayAppend(aConference,cConference.forumcount) />
 			<cfset ArrayAppend(aConference,cConference.threadcount) />
 			<cfset ArrayAppend(aConference,mmResourceBundle.key("active"&cConference.isActive )) />
+			<cfset ArrayAppend(aConference,"
+			<div>
+			<a title='#mmResourceBundle.key('edit')#' href='?action=conferences.edit&amp;ConferenceID=#cConference.ConferenceID#'><i class='icon-pencil'></i></a>
+			<a title='#mmResourceBundle.key('delete')#' href='?action=forums.edit&amp;ConferenceID=#cConference.ConferenceID#'><i class='icon-remove-sign'></i></a>
+			<a title='#mmResourceBundle.key('addforum')#' href='?action=forums&amp;ConferenceID=#cConference.ConferenceID#'><i class='icon-plus-sign'></i></a>
+			</div>
+			" ) />
+
 			<cfset ArrayAppend(aConferenceData,aConference) />
 		</cfloop>
 
@@ -158,13 +174,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var sCriteria		= StructNew() />
 
 		<!--- sortable columns, as per database query --->
-		<cfset sCols['0'] = "">
-		<cfset sCols['1'] = "name">
-		<cfset sCols['2'] = "conferencename">
-		<cfset sCols['3'] = "threadcounter">
-		<cfset sCols['4'] = "postcount">
-		<cfset sCols['5'] = "viewcount">
-		<cfset sCols['6'] = "isActive">
+		<cfset sCols['0'] = "name">
+		<cfset sCols['1'] = "conferencename">
+		<cfset sCols['2'] = "threadcounter">
+		<cfset sCols['3'] = "postcount">
+		<cfset sCols['4'] = "viewcount">
+		<cfset sCols['5'] = "isActive">
+		<cfset sCols['6'] = "orderNo">
 
 		<cfset sData['criteria']['siteid'] = session.siteID>
 
@@ -174,20 +190,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfloop from="1" to="#ArrayLen(sForum.itemarray)#" index="iiX">
 			<cfset cForum = sForum.itemarray[iiX] />
 			<cfset aForum	= ArrayNew(1) />
-			<cfset ArrayAppend(aForum,"
-			<ul class='table-buttons two'>
-			<li class='blank'></li>
-			<li><span title='#mmResourceBundle.key('forumedit')#' class='sb-button ui-state-default'><a class='ui-icon ui-icon-pencil' href='?action=forums.edit&amp;ForumID=#cForum.ForumID#'></a></span></li>
-			</ul>
-			" ) />
-			<cfset ArrayAppend(aForum,"<a title='#mmResourceBundle.key('forumview')#' href='?action=forums.edit&amp;ForumID=#cForum.ForumID#'>#cForum.name#</a>" ) />
+			<cfset ArrayAppend(aForum,"<a title='#mmResourceBundle.key('edit')#' href='?action=forums.edit&amp;ForumID=#cForum.ForumID#'>#cForum.name#</a>" ) />
 			<!---<cfif not len(arguments.conferenceID)>--->
-				<cfset ArrayAppend(aForum,"<a title='#mmResourceBundle.key('forumview')#' href='?action=forums&amp;conferenceID=#cForum.conferenceID#'>#cForum.conferencename#</a>") />
+				<cfset ArrayAppend(aForum,"<a title='#mmResourceBundle.key('edit')#' href='?action=forums&amp;conferenceID=#cForum.conferenceID#'>#cForum.conferencename#</a>") />
 			<!---</cfif>--->
 			<cfset ArrayAppend(aForum,cForum.threadcounter) />
 			<cfset ArrayAppend(aForum,cForum.postcount) />
 			<cfset ArrayAppend(aForum,cForum.viewcount) />
 			<cfset ArrayAppend(aForum,mmResourceBundle.key("active"&cForum.isActive )) />
+			<cfset ArrayAppend(aForum,"
+			<div>
+			<a title='#mmResourceBundle.key('edit')#' href='?action=forums.edit&amp;ForumID=#cForum.ForumID#'><i class='icon-pencil'></i></a>
+			<a title='#mmResourceBundle.key('delete')#' href='?action=forums.edit&amp;ForumID=#cForum.ForumID#'><i class='icon-remove-sign'></i></a>
+			<a title='#mmResourceBundle.key('reorder')#' href='?action=forums.reorder&amp;ConferenceID=#cForum.ConferenceID#'><i class='icon-reorder'></i></a>
+			</div>
+			" ) />
 			<cfset ArrayAppend(aForumData,aForum) />
 		</cfloop>
 
