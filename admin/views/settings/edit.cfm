@@ -8,6 +8,11 @@
 </cfsilent><cfoutput>
 <!--- global menu --->
 <!--- begin content --->
+	<div class="row">
+		<div class="span12">
+			#view("/global/bc")#
+		</div>
+	</div>
 	<!-- CONTENT HERE -->
 	<form action="#buildURL('admin:settings.edit?btaction=update')#" method="post">	
 	<input type="hidden" name="settingsID" value="#rc.settingsBean.getSettingsID()#">

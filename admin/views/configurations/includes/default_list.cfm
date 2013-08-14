@@ -2,7 +2,8 @@
 <div class="row">
 	<div class="span12">
 		<table id="ms-datatable" class="table table-striped table-condensed table-bordered mura-table-grid clickable sorting"
-		data-url="#$.globalConfig().getContext()#/plugins/#rc.pluginConfig.getDirectory()#/com/meldsolutions/meldforums/remote/MeldForumsRemoteAOP.cfc?method=getConfigurationList&data&returnFormat=json">
+		data-url="#$.globalConfig().getContext()#/plugins/#rc.pluginConfig.getDirectory()#/com/meldsolutions/meldforums/remote/MeldForumsRemoteAOP.cfc?method=getConfigurationList&data&returnFormat=json"
+		data-delete-message='#rc.mmRBF.key('deleteconfiguration-msg')#'>
 		<thead class="headers">
 		<tr>
 			<th class="varWidth nosort">#rc.mmRBF.key('name')#</th>

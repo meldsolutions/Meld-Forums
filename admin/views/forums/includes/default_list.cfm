@@ -9,7 +9,8 @@
 <div class="row">
 	<div class="span12">
 		<table id="ms-datatable" class="table table-striped table-condensed table-bordered mura-table-grid clickable sorting"
-			data-url="#$.globalConfig().getContext()#/plugins/#rc.pluginConfig.getDirectory()#/com/meldsolutions/meldforums/remote/MeldForumsRemoteAOP.cfc?siteID=#rc.siteID#&method=getForumList&data&returnFormat=json&conferenceID=#rc.conferenceID#">
+			data-url="#$.globalConfig().getContext()#/plugins/#rc.pluginConfig.getDirectory()#/com/meldsolutions/meldforums/remote/MeldForumsRemoteAOP.cfc?siteID=#rc.siteID#&method=getForumList&data&returnFormat=json&conferenceID=#rc.conferenceID#"
+			data-delete-message='#rc.mmRBF.key('deleteforum-msg')#'>
 			<thead class="headers">
 			<tr>
 				<th class="varWidth">#rc.mmRBF.key('name')#</th>

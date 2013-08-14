@@ -25,11 +25,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 <div class="plugincontent">
 	<div class="row">
 		<div class="span12">
-			#view("/global/bc")#
-		</div>
-	</div>
-	<div class="row">
-		<div class="span12">
 		<div id="meld-logo" class="clearfix">
 			<a href="http://www.meldsolutions.com" target="_new"></a>
 		</div>

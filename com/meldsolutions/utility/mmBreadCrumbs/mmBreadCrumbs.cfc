@@ -49,15 +49,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var str = "" />
 		<cfset var iiX = "" />
         <cfsavecontent variable="str"><cfoutput>
+			<ul class="navZoom alt">
 			<cfloop from="1" to="#ArrayLen(crumbArray)#" index="iiX">
-			<cfif iiX neq ArrayLen(crumbArray) and len( crumbArray[iiX].getURL() )>
-				<a href="#crumbArray[iiX].getURL()#">#crumbArray[iiX].getLabel()#</a> <span class="delim">&raquo;</span>
+			<cfif len( crumbArray[iiX].getURL() )>
+				<li class="page">
+				<a href="#crumbArray[iiX].getURL()#">#crumbArray[iiX].getLabel()#</a> <cfif iiX neq ArrayLen(crumbArray)><span class="delim">&raquo;</span></cfif>
+				</li>
 			<cfelseif iiX neq ArrayLen(crumbArray)>
 				#crumbArray[iiX].getLabel()# <span class="delim">&raquo;</span>
 			<cfelse>
+				<li class="page">
 				<span class="current">#crumbArray[iiX].getLabel()#</span>
+				</li>
 			</cfif>
-			</cfloop></cfoutput>
+			</cfloop></ul></cfoutput>
 		</cfsavecontent>
 
 		<cfreturn str>

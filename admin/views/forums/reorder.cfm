@@ -21,6 +21,11 @@ $(document).ready(function() {
 <!--- global menu --->
 <!--- begin content --->
 		<!-- CONTENT HERE -->
+	<div class="row">
+		<div class="span12">
+			#view("/global/bc")#
+		</div>
+	</div>
 
 <div class="row">
 	<div class="span12">

@@ -8,6 +8,12 @@
 </cfsilent><cfoutput>
 <!--- global menu --->
 <!--- begin content --->
+	<div class="row">
+		<div class="span12">
+			#view("/global/bc")#
+		</div>
+	</div>
+
 	<cfif rc.conferenceBean.getBeanExists()>
 		<form action="#buildURL('admin:conferences.edit?btaction=update')#" method="post">	
 	<cfelse>

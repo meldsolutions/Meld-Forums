@@ -9,6 +9,11 @@
 </cfsilent><cfoutput>
 <!--- global menu --->
 <!--- begin content --->
+	<div class="row">
+		<div class="span12">
+			#view("/global/bc")#
+		</div>
+	</div>
 	<!-- CONTENT HERE -->
 <cfif rc.configurationBean.getBeanExists()>
 	<form action="#buildURL('admin:configurations.edit?btaction=update')#" method="post">	

@@ -49,6 +49,11 @@ $.extend( $.fn.dataTableExt.oPagination, {
 		},
 
 		"fnUpdate": function ( oSettings, fnDraw ) {
+			$( ".doDelete" ).click(function() {
+				confirmDialog( "<h2>" + $(this).attr('data-title') + "</h2>" + $( "#ms-datatable" ).attr('data-delete-message'), "?action=conferences.delete&conferenceID=" + $(this).attr('data-id'));				
+				}
+			);
+
 			var iListLength = 5;
 			var oPaging = oSettings.oInstance.fnPagingInfo();
 			var an = oSettings.aanFeatures.p;

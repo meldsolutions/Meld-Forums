@@ -59,11 +59,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfset aConfiguration	= ArrayNew(1) />
 			
 			<cfset ArrayAppend(aConfiguration,"<a title='#mmResourceBundle.key('configurationview')#' href='?action=configurations.edit&amp;ConfigurationID=#cConfiguration.ConfigurationID#'>#cConfiguration.name#</a>" ) />
-			<cfset ArrayAppend(aConfiguration, iif(cConfiguration.isMaster,de("<span class='bullet'>&bull;</span>"),de("")) ) />
-			<cfset ArrayAppend(aConfiguration, iif(len(trim(cConfiguration.restrictreadgroups)),de("<span class='bullet'>&bull;</span>"),de("")) ) />
-			<cfset ArrayAppend(aConfiguration, iif(len(trim(cConfiguration.restrictcontributegroups)),de("<span class='bullet'>&bull;</span>"),de("")) ) />
-			<cfset ArrayAppend(aConfiguration, iif(len(trim(cConfiguration.restrictmoderategroups)),de("<span class='bullet'>&bull;</span>"),de("")) ) />
-			<cfset ArrayAppend(aConfiguration, iif(cConfiguration.doAttachments,de("<span class='bullet'>&bull;</span>"),de("")) ) />
+			<cfset ArrayAppend(aConfiguration, iif(cConfiguration.isMaster,de("<i class='icon-ok'></i>"),de("")) ) />
+			<cfset ArrayAppend(aConfiguration, iif(len(trim(cConfiguration.restrictreadgroups)),de("<i class='icon-ok'></i>"),de("")) ) />
+			<cfset ArrayAppend(aConfiguration, iif(len(trim(cConfiguration.restrictcontributegroups)),de("<i class='icon-ok'></i>"),de("")) ) />
+			<cfset ArrayAppend(aConfiguration, iif(len(trim(cConfiguration.restrictmoderategroups)),de("<i class='icon-ok'></i>"),de("")) ) />
+			<cfset ArrayAppend(aConfiguration, iif(cConfiguration.doAttachments,de("<i class='icon-ok'></i>"),de("")) ) />
 			<cfset ArrayAppend(aConfiguration,mmResourceBundle.key("active"& cConfiguration.isActive )) />
 			<cfif cConfiguration.isMaster>
 				<cfset ArrayAppend(aConfiguration,"
@@ -77,7 +77,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				<div>
 				<a title='#mmResourceBundle.key('copy')#' href='?action=configurations.edit&amp;copy=true&ConfigurationID=#cConfiguration.ConfigurationID#'><i class='icon-copy'></i></a>
 				<a title='#mmResourceBundle.key('edit')#' href='?action=configurations.edit&amp;ConfigurationID=#cConfiguration.ConfigurationID#'><i class='icon-pencil'></i></a>
-				<a title='#mmResourceBundle.key('delete')#' href='?action=forums.edit&amp;configurationID=#cconfiguration.configurationID#'><i class='icon-remove-sign'></i></a>
+			&nbsp;
+				<a title='#mmResourceBundle.key('delete')#' href='##' class='doDelete' data-id='#cConfiguration.ConfigurationID#' data-title='#mmResourceBundle.key('delete')#: #cConfiguration.name#'><i class='icon-remove-sign'></i></a>
 				</div>
 				" ) />
 			</cfif>
@@ -139,8 +140,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfset ArrayAppend(aConference,"
 			<div>
 			<a title='#mmResourceBundle.key('edit')#' href='?action=conferences.edit&amp;ConferenceID=#cConference.ConferenceID#'><i class='icon-pencil'></i></a>
-			<a title='#mmResourceBundle.key('delete')#' href='?action=forums.edit&amp;ConferenceID=#cConference.ConferenceID#'><i class='icon-remove-sign'></i></a>
-			<a title='#mmResourceBundle.key('addforum')#' href='?action=forums&amp;ConferenceID=#cConference.ConferenceID#'><i class='icon-plus-sign'></i></a>
+			<a title='#mmResourceBundle.key('forumlist')# #cConference.name#' href='?action=forums&amp;ConferenceID=#cConference.ConferenceID#'><i class='icon-sitemap'></i></a>
+			<a title='#mmResourceBundle.key('addforum')#' href='?action=forums.edit&amp;ConferenceID=#cConference.ConferenceID#'><i class='icon-plus-sign'></i></a>
+			&nbsp;
+			<a title='#mmResourceBundle.key('delete')#' href='##' class='doDelete' data-id='#cConference.ConferenceID#' data-title='#mmResourceBundle.key('delete')#: #cConference.name#'><i class='icon-remove-sign'></i></a>
 			</div>
 			" ) />
 
@@ -201,8 +204,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfset ArrayAppend(aForum,"
 			<div>
 			<a title='#mmResourceBundle.key('edit')#' href='?action=forums.edit&amp;ForumID=#cForum.ForumID#'><i class='icon-pencil'></i></a>
-			<a title='#mmResourceBundle.key('delete')#' href='?action=forums.edit&amp;ForumID=#cForum.ForumID#'><i class='icon-remove-sign'></i></a>
 			<a title='#mmResourceBundle.key('reorder')#' href='?action=forums.reorder&amp;ConferenceID=#cForum.ConferenceID#'><i class='icon-reorder'></i></a>
+			&nbsp;
+			<a title='#mmResourceBundle.key('delete')#' href='##' class='doDelete' data-id='#cForum.ForumID#' data-title='#mmResourceBundle.key('delete')#: #cForum.name#'><i class='icon-remove-sign'></i></a>
 			</div>
 			" ) />
 			<cfset ArrayAppend(aForumData,aForum) />
