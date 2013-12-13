@@ -1,1 +1,5 @@
-.svn
+.gitignore
+.settings
+.project
+/themes/ihs
+/themes/bootstrap1
