@@ -23,6 +23,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cfset variables.instance = StructNew()>
 
 	<cffunction name="init" access="public" output="false" returntype="MeldForumsConfigurationManager">
+		<cfargument name="MeldConfig" type="any" required="true">
+
+		<cfset variables.MeldConfig = arguments.MeldConfig />
+		
+		<cfset structAppend(variables.instance,structCopy(variables.MeldConfig.getAllValues()),true) />
+		<cfset structAppend(variables,structCopy(variables.MeldConfig.getAllValues()),true) />
+
 		<cfset variables.instance.ConfigurationConferenceKey = StructNew()>
 		<cfset variables.instance.ConfigurationForumKey =StructNew()>
 		<cfreturn this/>

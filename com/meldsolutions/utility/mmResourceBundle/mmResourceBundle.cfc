@@ -22,13 +22,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cfset variables.instance = StructNew()>
 
 	<cffunction name="init" access="public" output="false" returntype="mmResourceBundle">
-		<cfargument name="applicationKey" required="false" default="">
-		<cfargument name="pluginFileRoot" required="false" default="">
-		<cfargument name="rblocale" required="false" default="en">
+		<cfargument name="MeldConfig" type="any" required="true">
+
+		<cfset variables.MeldConfig = arguments.MeldConfig />
+			
+		<cfset structAppend(variables.instance,structCopy(variables.MeldConfig.getAllValues()),true) />
+		<cfset structAppend(variables,structCopy(variables.MeldConfig.getAllValues()),true) />
 		
-		<cfset setApplicationKey( arguments.applicationKey ) />
-		<cfset setpluginFileRoot( arguments.pluginFileRoot ) />
-		<cfset setBaseRBLocale( arguments.rblocale ) />
+		<cfset setApplicationKey( variables.applicationKey ) />
+		<cfset setpluginFileRoot( variables.pluginFileRoot ) />
+		<cfset setBaseRBLocale( variables.rblocale ) />
 		
 		<cfset variables.rbValid		= false>
 		<cfset variables.sRB			= StructNew() />

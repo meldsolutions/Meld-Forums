@@ -65,8 +65,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 	<cffunction name="setupApplication" output="false">
 		<cfset var beanFactory				= "" />
-		<cfset var coldspringXml			= "" />
-		<cfset var coldspringXmlPath		= "" />
 		<cfset var defaultProperties		= StructNew()>
 	
 		<!--- ensure that we have PluginConfig in the variables scope and $ --->
@@ -77,15 +75,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfif not isDefined("$")>
 			<cfset $ = getMuraScope() />
 		</cfif>
-				
-		<cfset coldspringXmlPath	= "#expandPath('/plugins')#/#variables.pluginConfig.getDirectory()#/coldspring/coldspring.xml.cfm" />
-
-		<!--- read in coldspringXml --->
-		<cffile action="read" file="#coldspringXmlPath#" variable="coldspringXml" />
-
-		<!--- parse the coldspringXml and replace all [plugin] with the plugin mapping path, and |plugin| with the physical path --->
-		<cfset coldspringXml = replaceNoCase( coldspringXml, "[plugin]", "plugins.#variables.pluginConfig.getDirectory()#.", "ALL") />
-		<cfset coldspringXml = replaceNoCase( coldspringXml, "|plugin|", "plugins/#variables.pluginConfig.getDirectory()#/", "ALL") />
 
 		<cfset defaultProperties.dsn				= variables.pluginConfig.getSetting( "dsn" )>
 		<cfset defaultProperties.dsnusername		= variables.pluginConfig.getSetting( "dsnusername" )>
@@ -114,19 +103,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		
 		<cfset variables.pluginConfig.setValue("DefaultProperties",defaultProperties) />
 
-		<!--- build CS factory --->
-		<cfset beanFactory=createObject("component","coldspring.beans.DefaultXmlBeanFactory").init( defaultProperties=defaultProperties ) />
+		<cfset beanFactory=createObject("component","#variables.pluginConfig.getPackage()#.com.org.corfield.ioc").init( "/plugins/#variables.pluginConfig.getDirectory()#/com/meldsolutions",{
+					recurse=true,
+					strict=true,
+					transientPattern = "(Bean)$"
+					} ) />
+					
+		<cfset beanFactory.getBean("MeldConfig").setValues(defaultProperties) />
+		
+		<cfset variables.pluginConfig.getApplication().setValue( "beanFactory", beanFactory ) />
 
-		<!--- load beans --->
-		<cfset beanFactory.loadBeansFromXmlRaw( coldspringXml ) />
-
-		<!--- set the FW/1 bean factory as our new ColdSpring bean factory --->
+		<!--- set the FW/1 bean factory  --->
 		<cfset setBeanFactory( beanFactory ) />
 
-		<!---
-			NOTE: do not set Mura's service factory as parent to our bean factory, as getBean() will
-			default to Mura's, not ours!
-		--->
 
 		<!--- set the pluginConfig for our plugin into the fw1 application scope --->
 		<cfset setPluginConfig( variables.pluginConfig )>

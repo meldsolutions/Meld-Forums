@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cfset variables.values			= StructNew()>
 	<cfset variables.customvalues	= StructNew()>
 	<cfset variables.customset		= false>
+	<cfset variables.instance = StructNew() />
 
 	<cffunction name="init" access="public" output="false" returntype="MeldBean">
 		<cfargument name="isDirty" type="boolean" required="false" default="0" /> 
@@ -178,6 +179,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="value" type="any" required="true">
 		
 		<cfset variables.values[arguments.key] = arguments.value />
+	</cffunction>
+
+	<cffunction name="setValues" access="public" output="false" returntype="any">
+		<cfargument name="valueStruct" type="struct" required="true">
+		
+		<cfset structAppend(variables.instance,structCopy(arguments.valueStruct),true) />
+		
+		<cfreturn this />
 	</cffunction>
 
 	<cffunction name="getValue" access="public" output="false" returntype="any">

@@ -103,7 +103,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfcase value="textarea,htmleditor,bbmleditor" >
 				<cfoutput>#strLabel#<textarea name="custom_#arguments.name#" class="textarea"#strGeneric#>#currentValue#</textarea></cfoutput>				
 			</cfcase>
-			<cfcase value="textarea,selectbox" >
+			<cfcase value="selectbox" >
 				<cfset aOpts = ListToArray( arguments.optionList,"^" ) />
 				<cfset aLabels = ListToArray( arguments.optionLabelList,"^" ) />
 				<cfoutput>#strLabel#<select name="custom_#arguments.name#" class="select">

@@ -21,18 +21,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 <cfcomponent displayname="MeldForumsSearchManager" hint="Meld Event" output="false">
 	<cfset variables.values		= StructNew()>
 
-	<cffunction name="init" access="public" output="false" returntype="MeldForumsSearchManager">
-		<cfargument name="dsn" type="string" required="true">
-		<cfargument name="dsnusername" type="string" required="true">
-		<cfargument name="dsnpassword" type="string" required="true">
-		<cfargument name="dsnprefix" type="string" required="true">
-		<cfargument name="dsntype" type="string" required="true">
+	<cfset variables.instance = StructNew()>
 
-		<cfset variables.dsn = arguments.dsn>
-		<cfset variables.dsnusername = arguments.dsnusername>
-		<cfset variables.dsnpassword = arguments.dsnpassword>
-		<cfset variables.dsnprefix = arguments.dsnprefix>
-		<cfset variables.dsntype = arguments.dsntype>
+	<cffunction name="init" access="public" output="false" returntype="MeldForumsSearchManager">
+		<cfargument name="MeldConfig" type="any" required="true">
+
+		<cfset variables.MeldConfig = arguments.MeldConfig />
+		
+		<cfset structAppend(variables.instance,structCopy(variables.MeldConfig.getAllValues()),true) />
+		<cfset structAppend(variables,structCopy(variables.MeldConfig.getAllValues()),true) />
 
 		<cfreturn this/>
 	</cffunction>
