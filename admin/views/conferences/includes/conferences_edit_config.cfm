@@ -7,7 +7,7 @@
 
 			<!--- active --->
 			<ui:Checkbox key="isactive" 		name="conferencebean_isactive" />
-	
+
 			<div class="control-group">
 				<label class="control-label">
 					<cfif request.context.mmRBF.keyExists('configuration','tip')>
@@ -16,7 +16,7 @@
 						#request.context.mmRBF.key('configuration')#
 					</cfif>
 					<cfif request.context.mmRBF.keyExists('configuration','helptext')>
-						<span class="help-inline">(request.context.mmRBF.key('configuration','helptext'))</span>	
+						<span class="help-inline">#(request.context.mmRBF.key('configuration','helptext'))#</span>
 					</cfif>
 				</label>
 				<div class="controls">
