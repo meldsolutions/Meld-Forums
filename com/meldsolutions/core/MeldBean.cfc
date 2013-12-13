@@ -185,6 +185,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		
 		<cfif structkeyexists( variables.values,arguments.key)>
 			<cfreturn variables.values[arguments.key] />
+		<cfelseif structkeyexists( variables.instance,arguments.key)>
+			<cfreturn variables.instance[arguments.key] />
 		<cfelseif structkeyexists( variables.customvalues,arguments.key)>
 			<cfreturn variables.customvalues[arguments.key] />
 		</cfif>

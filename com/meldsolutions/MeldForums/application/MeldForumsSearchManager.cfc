@@ -105,12 +105,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<cfquery name="qList" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
 			SELECT
-				<cfif variables.dsntype eq "mssql" AND structKeyExists(arguments,"pageBean")> 	
-					TOP  #( Ceiling(Val(arguments.pageBean.getPos())) + Ceiling(Val(arguments.pageBean.getSize())) )#
-				</cfif>
 				<cfif arguments.isCount>
-					COUNT(DISTINCT sea.threadID) AS total
+					<cfif variables.dsntype eq "mssql">
+						COUNT(sea.threadID) AS total
+					<cfelse>
+						COUNT(DISTINCT sea.threadID) AS total
+					</cfif>
 				<cfelse>
+					<cfif variables.dsntype eq "mssql" AND structKeyExists(arguments,"pageBean")> 	
+						TOP #( Ceiling(Val(arguments.pageBean.getPos())) + Ceiling(Val(arguments.pageBean.getSize())) )#
+					</cfif>
 					sea.threadID,sea.postID,frm.forumID,frm.conferenceID,
 					COALESCE(frm.configurationID, cnf.configurationID, '00000000-0000-0000-0000000000000001') as parentConfigurationID,
 					con.restrictReadGroups
@@ -176,7 +180,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfif ArrayLen(aSearchTerms) gt 1>
 				AND
 				(
+				<!--- workaround for dynamic looping over criteria --->
+				<cfif sType eq "OR">
+				0=1
+				<cfelse>
 				0=0
+				</cfif>
 				<cfloop from="1" to="#ArrayLen(aSearchTerms)#" index="iiX">
 					#sType# Searchblock LIKE <cfqueryparam value="%#aSearchTerms[iiX]#%" CFSQLType="cf_sql_varchar" />
 				</cfloop>
@@ -206,13 +215,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				GROUP BY sea.threadID
 				<cfif variables.dsntype eq "mssql">,sea.postID,frm.forumID,frm.conferenceID,frm.configurationID,cnf.configurationID,con.restrictReadGroups,sea.DateLastUpdate</cfif>
 				ORDER BY #arguments.orderBy#
-			</cfif>
-			<!--- if this is a MYSQL db, we can use LIMIT to get our start + count total and we are finished  --->
-			<cfif variables.dsntype eq "mysql" and structKeyExists(arguments,"pageBean")>
-				LIMIT <cfif len(arguments.pageBean.getPos())><cfqueryparam value="#arguments.pageBean.getPos()#" CFSQLType="cf_sql_integer"  />,</cfif> <cfqueryparam value="#arguments.pageBean.getSize()#" CFSQLType="cf_sql_integer"  />
+				<cfif variables.dsntype eq "mysql" AND structKeyExists(arguments,"pageBean")>
+					<!--- if this is a MYSQL db, we can use LIMIT to get our start + count total and we are finished  --->
+					LIMIT <cfif len(arguments.pageBean.getPos())><cfqueryparam value="#arguments.pageBean.getPos()#" CFSQLType="cf_sql_integer"  />,</cfif> <cfqueryparam value="#arguments.pageBean.getSize()#" CFSQLType="cf_sql_integer"  />
+				</cfif>
 			</cfif>
 		</cfquery>
-						
+
 		<cfif arguments.isCount>
 			<cfreturn qList />
 		</cfif>

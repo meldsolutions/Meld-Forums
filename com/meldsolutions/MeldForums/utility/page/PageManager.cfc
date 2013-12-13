@@ -127,7 +127,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfreturn sNavString />
 	</cffunction>
 
-	<cffunction name="getNavByPage" >
+	<cffunction name="getNavByPage" output="false">
 		<cfargument name="pageBean" required="true" type="any" />
 		<cfargument name="addPage" required="true" type="numeric" default="0" />
 		<cfargument name="setPage" required="true" type="numeric" default="0" />

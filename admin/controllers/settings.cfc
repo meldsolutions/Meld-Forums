@@ -46,6 +46,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset rc.themename			= settingsManager.getSiteSettings( rc.siteID ).getThemeBean().getName() />
 	</cffunction>
 
+	<cffunction name="rebuild" access="public" returntype="void" output="false">
+		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
+
+		<cfset var settingsManager		= getBeanFactory().getBean("MeldForumsSettingsManager") />
+		<cfset var searchService		= getBeanFactory().getBean("SearchableService") />
+		<cfset var settingsService		= getBeanFactory().getBean("settingsService") />
+		<cfset var mmBreadCrumbs		= getBeanFactory().getBean("mmBreadCrumbs") />
+		<cfset var mmResourceBundle		= getBeanFactory().getBean("mmResourceBundle") />
+		<cfset var settingsBean			= "" />
+		<cfset var sArgs				= StructNew() />
+
+		<cfoutput>HERE!</cfoutput><cfabort>
+
+		<cfset searchService.rebuildSearch() />
+
+		<cfset mmBreadCrumbs.addCrumb( rc,mmResourceBundle.key('settings'),"" )>
+
+	</cffunction>
+
+
 	<cffunction name="edit" access="public" returntype="void" output="false">
 		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
 	
