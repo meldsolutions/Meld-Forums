@@ -9,8 +9,8 @@
 <div class="row">
 	<div class="span12">
 		<table id="ms-datatable" class="table table-striped table-condensed table-bordered mura-table-grid clickable sorting"
-			data-url="#$.globalConfig().getContext()#/plugins/#rc.pluginConfig.getDirectory()#/com/meldsolutions/meldforums/remote/MeldForumsRemoteAOP.cfc?siteID=#rc.siteID#&method=getConferenceList&data&returnFormat=json"
-		   data-delete-message='#rc.mmRBF.key('deleteconference-msg')#'>
+			data-url="#$.globalConfig().getContext()#/plugins/#rc.pluginConfig.getDirectory()#/?action=admin:remote.conf&data"
+			data-delete-message='#rc.mmRBF.key('deleteconference-msg')#'>
 			<thead class="headers">
 			<tr>
 				<th class="varWidth" data-class="left">#rc.mmRBF.key('name')#</th>

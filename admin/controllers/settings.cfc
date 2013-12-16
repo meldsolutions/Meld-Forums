@@ -57,8 +57,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var settingsBean			= "" />
 		<cfset var sArgs				= StructNew() />
 
-		<cfoutput>HERE!</cfoutput><cfabort>
-
 		<cfset searchService.rebuildSearch() />
 
 		<cfset mmBreadCrumbs.addCrumb( rc,mmResourceBundle.key('settings'),"" )>
