@@ -23,11 +23,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cfset variables.instance = StructNew()>
 
 	<cffunction name="init" returntype="mmFileUpload" access="public" output="false">
-		<cfargument name="tempDirectory" type="string" required="false" default="">
-		<cfargument name="fileDirectory" type="string" required="false" default="">
+		<cfargument name="MeldConfig" type="any" required="true">
 
-		<cfset variables.tempDirectory = arguments.tempDirectory>
-		<cfset variables.fileDirectory = arguments.fileDirectory>
+		<cfset variables.MeldConfig = arguments.MeldConfig />
+			
+		<cfset structAppend(variables.instance,structCopy(variables.MeldConfig.getAllValues()),true) />
+		<cfset structAppend(variables,structCopy(variables.MeldConfig.getAllValues()),true) />
 
 		<cfreturn this>
 	</cffunction>
