@@ -13,9 +13,6 @@
 			<!--- friendlyname --->
 			<ui:TextInput key="friendlyname" 	name="forumbean_friendlyname" />
 
-			<!--- friendlyname --->
-			<ui:TextInput key="friendlyname" 	name="forumbean_friendlyname" />
-
 			<div class="control-group">
 				<label class="control-label" for="Conference">
 					<cfif request.context.mmRBF.keyExists('Conference','tip')>
