@@ -16,4 +16,7 @@ Current development version is 2.5 (in the Bootstrap Branch). The Bootstrap bran
 this is to bring it into line with the latest Mura CMS migration to the Bootstrap framework. ColdSpring has been replaced by DI/1 (as per Mura CMS
 6.1), though this will work fine in earlier versions of Mura CMS as well.
 
+You can find documentation on the GitHub Wiki page: https://github.com/meldsolutions/Meld-Forums/wiki
+
 ** New Bootstrap front end coming soon
+
