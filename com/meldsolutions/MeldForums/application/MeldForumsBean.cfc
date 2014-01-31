@@ -171,7 +171,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cffunction name="getProfileLink" access="public" returntype="string" output="false">
 		<cfargument name="user" type="any" required="false" default="">
 
-		<cfset var rString = getForumWebRoot() & getUrlKey() & "profile/view/" & userID & "/" />
 		<cfset var userID	= "" />
 
 		<cfif isSImpleValue(user) and getUtility().isUUID( arguments.user )>
