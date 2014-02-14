@@ -17,6 +17,3 @@ this is to bring it into line with the latest Mura CMS migration to the Bootstra
 6.1), though this will work fine in earlier versions of Mura CMS as well.
 
 You can find documentation on the GitHub Wiki page: https://github.com/meldsolutions/Meld-Forums/wiki
-
-** New Bootstrap front end coming soon
-
