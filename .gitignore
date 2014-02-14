@@ -1,5 +1,4 @@
-.gitignore
-.settings
-.project
-/themes/ihs
-/themes/bootstrap1
+/resourceBundles/en_*
+/themes/bootstrap*
+/themes/i*
+.*

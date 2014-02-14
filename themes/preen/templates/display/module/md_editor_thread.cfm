@@ -6,7 +6,7 @@
 <cfparam name="form.message" default="#rc.threadbean.getMessage()#">
 
 </cfsilent><cfoutput>
-<form class="forumsform" id="forumsform" action="#rc.MFBean.getEditorAction( request.section,request.item,rc.threadbean.getForumID() )#" method="post" onsubmit="return validate(this);" enctype="multipart/form-data">
+<form class="forumsform" id="forumsform" action="#rc.MFBean.getEditorAction( request.section,request.item,rc.threadbean.getForumID() )#" method="post" enctype="multipart/form-data">
 <div id="hiddenFields">
 	<input type="hidden" id="threadID" name="threadID" value="#rc.threadbean.getThreadID()#">
 	<input type="hidden" id="forumID" name="forumID" value="#rc.threadbean.getForumID()#">

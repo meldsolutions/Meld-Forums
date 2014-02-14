@@ -170,7 +170,7 @@ tr td.mf-buttonbar-right div {
 	text-decoration: none;
 	cursor: help;
 	padding-right: 8px;
-	background: url(/admin/images/icons/icon_tool_tip.gif) no-repeat right top;
+/*	background: url(/admin/images/icons/icon_tool_tip.gif) no-repeat right top; */
 	display: block;
 	line-height: 1.2;
 }

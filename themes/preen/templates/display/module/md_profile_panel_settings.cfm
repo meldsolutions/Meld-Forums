@@ -5,7 +5,7 @@
 	<cfset local.muraUserBean	= rc.userBean.getExternalUserBean() />
 </cfsilent>
 <cfoutput>
-	<form id="mf-profile-form" class="mf-profile-form" action="./?panel=settings" method="post" onsubmit="return validate(this);">
+	<form id="mf-profile-form" class="mf-profile-form" action="./?panel=settings" method="post">
 	<ul>
 		<fieldset>
 		<li class="req">
