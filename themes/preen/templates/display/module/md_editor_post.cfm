@@ -10,9 +10,9 @@
 
 </cfsilent><cfoutput>
 <cfif rc.mode eq "newpost">
-	<form class="forumsform" id="forumsform" action="#rc.MFBean.getEditorAction( request.section,request.item,rc.postbean.getThreadID() )#" method="post" name="posteditor" onsubmit="return validate(this);" enctype="multipart/form-data">
+	<form class="forumsform" id="forumsform" action="#rc.MFBean.getEditorAction( request.section,request.item,rc.postbean.getThreadID() )#" method="post" name="posteditor" onsubmit="return validateForm(this);" enctype="multipart/form-data">
 <cfelse>
-<form class="forumsform" id="forumsform" action="#rc.MFBean.getEditorAction( request.section,request.item,rc.postbean.getPostID() )#" method="post" name="posteditor" onsubmit="return validate(this);" enctype="multipart/form-data">
+<form class="forumsform" id="forumsform" action="#rc.MFBean.getEditorAction( request.section,request.item,rc.postbean.getPostID() )#" method="post" name="posteditor" enctype="multipart/form-data">
 </cfif>
 <div id="hiddenFields">
 	<input type="hidden" id="threadID" name="threadID" value="#rc.postbean.getThreadID()#">

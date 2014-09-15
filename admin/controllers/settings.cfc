@@ -46,6 +46,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset rc.themename			= settingsManager.getSiteSettings( rc.siteID ).getThemeBean().getName() />
 	</cffunction>
 
+	<cffunction name="rebuild" access="public" returntype="void" output="false">
+		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
+
+		<cfset var settingsManager		= getBeanFactory().getBean("MeldForumsSettingsManager") />
+		<cfset var searchService		= getBeanFactory().getBean("SearchableService") />
+		<cfset var settingsService		= getBeanFactory().getBean("settingsService") />
+		<cfset var mmBreadCrumbs		= getBeanFactory().getBean("mmBreadCrumbs") />
+		<cfset var mmResourceBundle		= getBeanFactory().getBean("mmResourceBundle") />
+		<cfset var settingsBean			= "" />
+		<cfset var sArgs				= StructNew() />
+
+		<cfset searchService.rebuildSearch() />
+
+		<cfset mmBreadCrumbs.addCrumb( rc,mmResourceBundle.key('settings'),"" )>
+
+	</cffunction>
+
+
 	<cffunction name="edit" access="public" returntype="void" output="false">
 		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
 	
@@ -109,6 +127,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var settingsBean		= "" />
 		<cfset var sArgs			= StructNew() />
 
+
 		<!--- create a blank Settings bean for the form params (i.e. unchecked checkboxes ) --->
 		<cfset settingsBean 		= settingsService.createSettings() />
 
@@ -116,12 +135,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset mmFormTools.paramaterizeBeanBooleans(settingsBean) />
 
 		<cfset formData = mmFormTools.scopeFormSubmission(form,false,true) />
-	
+						
 		<!--- now get the existing bean --->
 		<cfset settingsBean = SettingsService.getBeanByAttributes( formData.settingsbean.settingsID ) />
 
 		<!--- set the new values --->
 		<cfset settingsBean.updateMemento( formData.settingsBean )>
+
+		<cfif structKeyExists(formData.SETTINGSBEAN,"RESETTEMPDIRECTORY") and formData.SETTINGSBEAN['RESETTEMPDIRECTORY'] eq 1>
+			<cfset settingsBean.setTempDir( createUUID() ) />
+		</cfif>
+
+		<cfif structKeyExists(formData.SETTINGSBEAN,"resetavatar") and formData.SETTINGSBEAN['resetavatar'] eq 1>
+			<cfset settingsBean.setResetAvatar( 1 )>
+		</cfif>
 		
 		<!--- update the settings --->
 		<cfreturn SettingsService.updateSettings( settingsBean ) />		

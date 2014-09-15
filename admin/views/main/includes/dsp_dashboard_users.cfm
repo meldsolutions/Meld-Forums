@@ -1,5 +1,5 @@
 <cfoutput>
-	<table class="mf-dashboard-table">
+	<table class="table table-striped table-condensed table-bordered mura-table-grid">
 		<tr>
 			<th colspan="4">
 			#rc.mmRBF.key('recentusers')#

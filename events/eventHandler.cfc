@@ -25,6 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="$">
 
 		<cfset var appreloadKey = $.GlobalConfig().getValue('appreloadKey') />
+		<cfset var qEventHandlers = "" />
+		<cfset var customEventHandler = "" />
 
 		<cfif len( appreloadKey ) and structKeyExists(url,appreloadKey)> 
 			<cfset url[variables.framework.reload] = true />
@@ -34,7 +36,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfinvoke component="#pluginConfig.getPackage()#.Application" method="onApplicationStart" />
 
 		<cfset variables.pluginConfig.addEventHandler(this)>
+		
+		<cfset qEventHandlers = directoryList( expandPath("/#variables.pluginConfig.getDirectory()#/events/custom"),false,"query","*.cfc"  )>
+		
+		<cfif qEventHandlers.recordCount>
+			<cfloop query="qEventHandlers">
+				<cfset customEventHandler = createObject("component","#variables.pluginConfig.getDirectory()#.events.custom.#replaceNoCase(qEventHandlers.name,".cfc","")#") />	
+				
+				<cfset variables.pluginConfig.addEventHandler(customEventHandler)>
+			</cfloop>			
+		</cfif>			
 	</cffunction>
+
 
 	<cffunction name="onAdminModuleNav">
 		<cfargument name="$">

@@ -19,10 +19,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 --->
 <cfoutput>
-<div id="meld-body">
-	<h3>Meld Forums Support</h3>
-	<p>Issues can be posted on <a href="https://github.com/meldsolutions/Meld-Forums/issues">GitHub</a>.
-	This is also the location for <a href="https://github.com/meldsolutions/Meld-Forums/wiki">documentation</a>, and where you can download the 
-	latest version of the plugin.</p>
+<div class="row">
+	<div class="span12">
+		<h3>Meld Forums Support</h3>
+		<p>Issues can be posted on <a href="https://github.com/meldsolutions/Meld-Forums/issues">GitHub</a>.
+		This is also the location for <a href="https://github.com/meldsolutions/Meld-Forums/wiki">documentation</a>, and where you can download the 
+		latest version of the plugin.</p>
+	</div>
 </div>
 </cfoutput>

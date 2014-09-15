@@ -28,13 +28,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cfinclude template="#rc.MFBean.getThemeRootDirectory()#event/e_global.cfm">
 </cfsilent>
 <cfoutput>
-
+<div class="span12">
+	<cfif len(local.eventContent['searchform'])>
+		#local.eventContent['searchform']#
+	<cfelse>
+		<cfmodule template="module/md_searchform.cfm" local="#local#">
+	</cfif>
+</div>
+<div class="col-lg-12" style="border: 1px solid green">
 <cfmodule template="module/md_page_header.cfm" local="#local#">
-<cfif len(local.eventContent['searchform'])>
-	#local.eventContent['searchform']#
-<cfelse>
-	<cfmodule template="module/md_searchform.cfm" local="#local#">
-</cfif>
 
 <cfloop from="1" to="#ArrayLen(local.aConferences)#" index="local.iiX">
 	<cfinclude template="#rc.MFBean.getThemeRootDirectory()#event/e_md_conference.cfm">
@@ -64,6 +66,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	</table>
 	</cfif>
 </cfloop>
+</div>
 
 <cfmodule template="module/md_page_footer.cfm" local="#local#">
 

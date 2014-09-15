@@ -3,9 +3,9 @@
 <package>MeldForums</package>
 <directoryFormat>packageOnly</directoryFormat>
 <loadPriority>4</loadPriority>
-<version>Beta 2.0.2.1</version>
+<version>2.5</version>
 <provider>Meld Solutions Inc.</provider>
-<providerURL>http://www.meldsolutions.com</providerURL>
+<providerURL>https://github.com/MeldSolutions/</providerURL>
 <category>Application</category>
 <settings>
 	<setting>

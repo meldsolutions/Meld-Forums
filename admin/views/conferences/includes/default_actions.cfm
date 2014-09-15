@@ -18,12 +18,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 --->
-<cfsilent>
-	<cfset rc = rc>
-</cfsilent><cfoutput>
-<ul class="meld-nav-secondary">
-	<li>
-		<a href="?action=admin:conferences.edit" title="#rc.mmRBF.key('addnewconference','tip')#">#rc.mmRBF.key('addnewconference')#</a>				
-	</li>
-</ul>
+<cfoutput>
+<div class="row">
+	<div class="span12">
+		<a href="#buildURL('admin:conferences.reorder')#" title="#rc.mmRBF.key('reorder','tip')#" class="btn"><i class="icon-reorder"></i> #rc.mmRBF.key('reorder')#</a>
+		<a href="#buildURL('admin:conferences.edit')#" title="#rc.mmRBF.key('addnewconference','tip')#" class="btn pull-right"><i class="icon-plus-sign"></i> #rc.mmRBF.key('addnewconference')#</a>
+	</div>
+</div>
 </cfoutput>

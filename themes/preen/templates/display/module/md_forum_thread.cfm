@@ -16,7 +16,7 @@
 	</cfif>
 </cfsilent><cfoutput>
 
-<tr class="mf-thread-pod type#attributes.type# #attributes.rowClass# clearfix">
+<tr class="mf-thread-pod type#attributes.type# #attributes.rowClass#">
 	<td class="mf-block-icon">
 		<span class="mf-wrapper">
 		<cfif len(local.eventContent['forumthreadicon'])>

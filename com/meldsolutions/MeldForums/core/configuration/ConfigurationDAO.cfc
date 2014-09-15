@@ -18,20 +18,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 --->
 <cfcomponent displayname="ConfigurationDAO" output="false" extends="MeldForums.com.meldsolutions.core.MeldDAO">
 <!---^^GENERATEDSTART^^--->
+	<cfset variables.instance = StructNew() />
 	<cffunction name="init" access="public" output="false" returntype="ConfigurationDAO">
-		<cfargument name="dsn" type="string" required="true">
-		<cfargument name="dsnusername" type="string" required="true">
-		<cfargument name="dsnpassword" type="string" required="true">
-		<cfargument name="dsnprefix" type="string" required="true">
-		<cfargument name="dsntype" type="string" required="true">
+		<cfargument name="MeldConfig" type="any" required="true">
 
-		<cfset variables.dsn = arguments.dsn>
-		<cfset variables.dsnusername = arguments.dsnusername>
-		<cfset variables.dsnpassword = arguments.dsnpassword>
-		<cfset variables.dsnprefix = arguments.dsnprefix>
-		<cfset variables.dsntype = arguments.dsntype>
+		<cfset variables.MeldConfig = arguments.MeldConfig />
+		
+		<cfset structAppend(variables.instance,structCopy(variables.MeldConfig.getAllValues()),true) />
+		<cfset structAppend(variables,structCopy(variables.MeldConfig.getAllValues()),true) />
 
-		<cfreturn this />
+		<cfreturn this>
 	</cffunction>
 	
 	<cffunction name="save" access="public" output="false" returntype="boolean">

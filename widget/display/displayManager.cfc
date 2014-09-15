@@ -137,6 +137,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfsavecontent variable="str"><cfoutput>
 		<select name="availableObjects" id="availableObjects" class="multiSelect" size="14" style="width: 310px;">
 			<option value='plugin~Widget:Log in/out~#arguments.event.getValue("ObjectID")#~{"action":"widget.loginout"}'>Widget:Log in/out</option>
+			<option value='plugin~Widget:Side Nav~#arguments.event.getValue("ObjectID")#~{"action":"widget.sidenav"}'>Widget:Side Nav</option>
 		</select>
 		</cfoutput></cfsavecontent>
 

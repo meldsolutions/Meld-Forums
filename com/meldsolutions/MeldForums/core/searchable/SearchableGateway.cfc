@@ -18,20 +18,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 --->
 <cfcomponent displayname="SearchableGateway" output="false" extends="MeldForums.com.meldsolutions.core.MeldGateway">
 <!---^^GENERATEDSTART^^--->
+	<cfset variables.instance = StructNew() />
 	<cffunction name="init" access="public" output="false" returntype="SearchableGateway">
-		<cfargument name="dsn" type="string" required="true">
-		<cfargument name="dsnusername" type="string" required="true">
-		<cfargument name="dsnpassword" type="string" required="true">
-		<cfargument name="dsnprefix" type="string" required="true">
-		<cfargument name="dsntype" type="string" required="true">
+		<cfargument name="MeldConfig" type="any" required="true">
 
-		<cfset variables.dsn = arguments.dsn>
-		<cfset variables.dsnusername = arguments.dsnusername>
-		<cfset variables.dsnpassword = arguments.dsnpassword>
-		<cfset variables.dsnprefix = arguments.dsnprefix>
-		<cfset variables.dsntype = arguments.dsntype>
+		<cfset variables.MeldConfig = arguments.MeldConfig />
+		
+		<cfset structAppend(variables.instance,structCopy(variables.MeldConfig.getAllValues()),true) />
+		<cfset structAppend(variables,structCopy(variables.MeldConfig.getAllValues()),true) />
 
-		<cfreturn this />
+		<cfreturn this>
 	</cffunction>
 	
 	<cffunction name="getByAttributesQuery" access="public" output="false" returntype="query">
@@ -187,7 +183,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 					TOP #Ceiling(Val(arguments.start+arguments.size))#
 				</cfif>
 				<cfif arguments.isCount>
-					COUNT(*) AS total
+					COUNT(mf_searchable.postID) AS total
 				<cfelse>
 					#returnFields#
 				</cfif>
@@ -278,6 +274,62 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 <!---^^GENERATEDEND^^--->
 <!---^^CUSTOMSTART^^--->
+
+	<cffunction name="rebuildSearch" access="public" output="false" returntype="void">
+
+		<cfset var qList	= "" />		
+		<cfset var qClear	= "" />		
+		<cfset var qUp	= "" />		
+		<cfset var count	= 0 />		
+		<cfset var searchContent	= "" /> <!---  /> --->
+
+		<cfquery name="qClear" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
+			DELETE
+			FROM	#variables.dsnprefix#mf_searchable
+		</cfquery>
+
+		<cfquery name="qList" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
+			SELECT
+				mfp.threadID,mfp.postID,mfp.message,mft.title
+			FROM
+				#variables.dsnprefix#mf_post mfp
+			JOIN
+				#variables.dsnprefix#mf_thread mft
+				ON
+				(mfp.threadID = mft.threadID)
+			WHERE
+				mfp.isDisabled = 0
+				AND
+				mfp.isActive = 1
+				AND
+				mfp.isApproved = 1
+		</cfquery>
+
+		<cfloop query="qList">
+			<cfquery name="qUp" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
+				INSERT INTO
+					#variables.dsnprefix#mf_searchable
+					(
+					ThreadID,
+					PostID,
+					Searchblock,
+					DateCreate,
+					DateLastUpdate
+						)
+					VALUES
+					(
+					<cfqueryparam value="#qList.threadID#" CFSQLType="cf_sql_char" maxlength="35" />,
+					<cfqueryparam value="#qList.postID#" CFSQLType="cf_sql_char" maxlength="35" />,
+					<cfqueryparam value="#getmmUtility().stripAll( qList.title & " ~ " & qList.message )#" CFSQLType="cf_sql_longvarchar" />,
+					<cfqueryparam value="#CreateODBCDateTime(now())#" CFSQLType="cf_sql_timestamp" />,
+					<cfqueryparam value="#CreateODBCDateTime(now())#" CFSQLType="cf_sql_timestamp" />
+					)
+			</cfquery>
+		</cfloop>
+
+	</cffunction>
+
+
 <!---^^CUSTOMEND^^--->
 </cfcomponent>	
 

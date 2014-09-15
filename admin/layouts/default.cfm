@@ -18,8 +18,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 --->
+<cfimport prefix="ui" taglib="../ui" />
+
 <cfsilent>
 	<!--- headers --->
 	<cfinclude template="../includes/headers/global.cfm">
 </cfsilent>
-<cfoutput>#replace(application.pluginManager.renderAdminTemplate(body=body,pageTitle=rc.pluginConfig.getName(),jsLib="jquery"),"cPlugins","msPlugins")#</cfoutput>
+<cfoutput>#application.pluginManager.renderAdminTemplate(body=body,pageTitle=rc.pluginConfig.getName(),jsLib="jquery")#</cfoutput>

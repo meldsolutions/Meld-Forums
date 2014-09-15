@@ -31,6 +31,36 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 	</cffunction>
 
+	<cffunction name="reorder" access="public" returntype="void" output="false">
+		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
+
+		<cfset rc.mmBC.addCrumb( rc,rc.mmRBF.key('conferences'),"?action=conferences" )>
+		<cfset rc.mmBC.addCrumb( rc,rc.mmRBF.key('reorder') )>
+
+		<!--- check if a button was clicked --->
+		<cfif StructKeyExists(rc,"sortorder") and len(rc.sortOrder) gt 0>
+			<cfset getBeanFactory().getBean("conferenceService").setSortOrder( rc.sortOrder ) />
+			<cflocation url="?action=conferences" addtoken="false">
+		</cfif>
+		
+		<cfset rc.aConferences = getBeanFactory().getBean("conferenceService").search( criteria=StructNew(),orderby="OrderNo ASC" ) /> 
+	</cffunction>
+
+	<cffunction name="delete" access="public" returntype="void" output="false">
+		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
+		
+		<cfif not rc.$.currentUser().isPrivateUser()>
+			<cflocation url="?">
+		</cfif>
+		
+		<cfset var success = actionDeleteConference( arguments.rc )>
+
+		<cfif success eq true>
+			<cflocation url="?action=conferences" addtoken="false">
+		</cfif> 
+	</cffunction>
+
+
 	<cffunction name="edit" access="public" returntype="void" output="false">
 		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
 	
@@ -43,6 +73,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<cfset var sPresets			= StructNew() />
 		<cfset var sArgs			= StructNew() />
+
+		<cfif not rc.$.currentUser().isPrivateUser()>
+			<cflocation url="?">
+		</cfif>
 
 		<cfset rc.mmBC.addCrumb( rc,rc.mmRBF.key('conferences'),"?action=conferences" )>
 
@@ -193,17 +227,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var pluginEvent 			= createEvent(rc) />
 		<cfset var pluginManager		= rc.$.getBean('pluginManager') />
 		
-		<cfset formData = mmFormTools.scopeFormSubmission(form,false,true) />
+		<cfset formData = mmFormTools.scopeFormSubmission(url,false,true) />
 
 		<cfset pluginEvent.setValue('data',formData ) />
-		<cfset pluginEvent.setValue('conferenceID',formData.conferencebean.conferenceID ) />
+		<cfset pluginEvent.setValue('conferenceID',rc.conferenceID ) />
 		<cfset pluginEvent.setValue('siteID',rc.siteID ) />
 		<cfset pluginEvent.setValue('complete',false ) />
 		<cfset rc.mmEvents.announceEvent( rc.$,"onMeldForumsDeleteConference",pluginEvent ) />
 		
 		<!--- delete the conference --->
 		<cfif pluginEvent.getValue('complete') eq false>
-			<cfreturn ConferenceService.deleteConference( formData.conferencebean.conferenceID ) />
+			<cfreturn ConferenceService.deleteConference( rc.conferenceID ) />
 		</cfif>		
 	</cffunction>	
 </cfcomponent>

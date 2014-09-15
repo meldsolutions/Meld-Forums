@@ -7,6 +7,27 @@
 	
 	</cffunction>
 
+	<cffunction name="delete" access="public" returntype="void" output="false">
+		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
+
+		<cfset var configurationService	= getBeanFactory().getBean("configurationService") />
+		<cfset var configurationBean = configurationService.getConfiguration( configurationID = arguments.rc.configurationID ) />
+		
+		<cfif not rc.$.currentUser().isPrivateUser()>
+			<cflocation url="?">
+		</cfif>
+		
+		<cfif configurationBean.getIsMaster()>
+			<cflocation url="?action=configurations&msg=CANNOTDELETEMASTER">
+		</cfif>
+		
+		<cfset success = actionDeleteConfiguration( arguments.rc )>
+
+		<cfif success eq true>
+			<cflocation url="?action=configurations" addtoken="false">
+		</cfif> 
+	</cffunction>
+
 	<cffunction name="edit" access="public" returntype="void" output="false">
 		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
 	
@@ -25,6 +46,10 @@
 
 		<cfset var sPresets			= StructNew() />
 		<cfset var sArgs			= StructNew() />
+
+		<cfif not rc.$.currentUser().isPrivateUser()>
+			<cflocation url="?">
+		</cfif>
 
 		<cfset mmBreadCrumbs.addCrumb( rc,mmResourceBundle.key('configurations'),"?action=configurations" )>
 
@@ -60,8 +85,10 @@
 			<cfset sArgs.configurationID	= arguments.rc.configurationID />
 			<cfset configurationBean		= configurationService.duplicateConfiguration( argumentCollection=sArgs ) />
 
+			<cfset configurationBean.setIsMaster(0) />
+
 			<cfset mmBreadCrumbs.addCrumb( rc,configurationBean.getName() )>
-			<cfset mmBreadCrumbs.addCrumb( rc,mmResourceBundle.key('editcopy') )>
+			<cfset mmBreadCrumbs.addCrumb( rc,mmResourceBundle.key('edit') )>
 		<cfelseif isDefined( "arguments.rc.configurationID" )>
 			<cfset configurationBean = configurationService.getConfiguration( configurationID = arguments.rc.configurationID ) />
 			<cfif configurationBean.beanExists()>
@@ -161,6 +188,6 @@
 		<cfset formData = mmFormTools.scopeFormSubmission(form,false,true) />
 		
 		<!--- save the configuration --->
-		<cfreturn ConfigurationService.deleteConfiguration( formData.configurationbean.configurationID ) />		
+		<cfreturn ConfigurationService.deleteConfiguration( rc.configurationID ) />		
 	</cffunction>	
 </cfcomponent>

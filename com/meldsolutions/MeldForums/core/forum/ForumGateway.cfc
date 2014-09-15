@@ -18,20 +18,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 --->
 <cfcomponent displayname="ForumGateway" output="false" extends="MeldForums.com.meldsolutions.core.MeldGateway">
 <!---^^GENERATEDSTART^^--->
+	<cfset variables.instance = StructNew() />
 	<cffunction name="init" access="public" output="false" returntype="ForumGateway">
-		<cfargument name="dsn" type="string" required="true">
-		<cfargument name="dsnusername" type="string" required="true">
-		<cfargument name="dsnpassword" type="string" required="true">
-		<cfargument name="dsnprefix" type="string" required="true">
-		<cfargument name="dsntype" type="string" required="true">
+		<cfargument name="MeldConfig" type="any" required="true">
 
-		<cfset variables.dsn = arguments.dsn>
-		<cfset variables.dsnusername = arguments.dsnusername>
-		<cfset variables.dsnpassword = arguments.dsnpassword>
-		<cfset variables.dsnprefix = arguments.dsnprefix>
-		<cfset variables.dsntype = arguments.dsntype>
+		<cfset variables.MeldConfig = arguments.MeldConfig />
+		
+		<cfset structAppend(variables.instance,structCopy(variables.MeldConfig.getAllValues()),true) />
+		<cfset structAppend(variables,structCopy(variables.MeldConfig.getAllValues()),true) />
 
-		<cfreturn this />
+		<cfreturn this>
 	</cffunction>
 	
 	<cffunction name="getByAttributesQuery" access="public" output="false" returntype="query">
@@ -694,6 +690,25 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset arrayAppend( aCrumb,sObject ) />
 		
 		<cfreturn aCrumb />
+	</cffunction>
+
+
+	<cffunction name="setSortOrder" access="public" output="false" returntype="void">
+		<cfargument name="sortIDs" type="string" required="false" default="" />
+
+		<cfset var qList		= "" />
+		<cfset var iiX = 0 />
+		<cfset var aOrder = ListToArray( arguments.sortIDs ) />
+		
+		<cfloop from="1" to="#ArrayLen( aOrder )#" index="iiX">
+			<cfquery name="qList" datasource="#variables.dsn#" username="#variables.dsnusername#" password="#variables.dsnpassword#">
+				UPDATE	#variables.dsnprefix#mf_forum
+				SET
+					orderNo = #iiX#
+				WHERE	
+					forumID = <cfqueryparam value="#aOrder[iiX]#" CFSQLType="cf_sql_varchar" maxlength="35" />
+			</cfquery>
+		</cfloop>
 	</cffunction>
 
 <!---^^CUSTOMEND^^--->

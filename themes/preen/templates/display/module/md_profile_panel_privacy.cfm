@@ -3,7 +3,7 @@
 	<cfset rc		= local.rc />
 </cfsilent>
 <cfoutput>
-	<form id="mf-profile-form" class="mf-profile-form" action="./?panel=privacy" method="post" onsubmit="return validate(this);">
+	<form id="mf-profile-form" class="mf-profile-form" action="./?panel=privacy" method="post">
 	<ul>
 		<fieldset>
 		<li class="checkbox">

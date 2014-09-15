@@ -271,6 +271,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfreturn getConferenceGateway().getCount(argumentCollection=arguments) />
 	</cffunction>
 
+	<cffunction name="setSortOrder" access="public" output="false" returntype="void">
+		<cfargument name="sortIDs" type="string" required="false" default="" />
+		
+		<cfreturn getConferenceGateway().setSortOrder(argumentCollection=arguments) />
+	</cffunction>
+
 <!---^^CUSTOMEND^^--->
 
 	<cffunction name="setForumService" access="public" returntype="any" output="false">

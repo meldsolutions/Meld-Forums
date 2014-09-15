@@ -1,3 +1,4 @@
+<cfimport prefix="ui" taglib="../../ui" />
 <cfsilent>
 	
 	<!--- rc --->
@@ -7,36 +8,41 @@
 </cfsilent><cfoutput>
 <!--- global menu --->
 <!--- begin content --->
-<div id="meld-body" class="section">
+	<div class="row">
+		<div class="span12">
+			#view("/global/bc")#
+		</div>
+	</div>
 	<!-- CONTENT HERE -->
-	<form id="meld-edit-form" class="meld-form" method="post" action="index.cfm" onsubmit="return validate(this)">
-	<input type="hidden" name="action" value="settings.edit">
+	<form action="#buildURL('admin:settings.edit?btaction=update')#" method="post">	
 	<input type="hidden" name="settingsID" value="#rc.settingsBean.getSettingsID()#">
-	<div id="meld-body">
 		<!-- CONTENT HERE -->
-		<div id="msTabs">
-			<ul>
-				<li><a id="msTabs-General-Tab" href="##msTabs-General">#rc.mmRBF.key('general')#</a></li>
-				<li><a id="msTabs-Permissions-Tab" href="##msTabs-Permissions">#rc.mmRBF.key('permissions')#</a></li>
-				<li><a id="msTabs-Files-Tab" href="##msTabs-Files">#rc.mmRBF.key('files')#</a></li>
-				<li><a id="msTabs-Theme-Tab" href="##msTabs-Theme">#rc.mmRBF.key('Theme')#</a></li>
-			</ul>
-			<div id="msTabs-panels">
-				#view("settings/includes/settings_edit_general")#
-				#view("settings/includes/settings_edit_permissions")#
-				#view("settings/includes/settings_edit_files")#
-				#view("settings/includes/settings_edit_theme")#
-			</div>
-			<div>
-				<ul class="form-buttons">
-					<li><input name="btaction" type="submit" class="submit ui-state-default" value="cancel"></li>
-					<li><input name="btaction" type="submit" class="submit ui-state-default" value="update"></li>
-				</ul>
-			</div>
-		</div>	
-	</div>	
+	<div class="tabbable tabs-left">
+	
+		<ul class="nav nav-tabs tabs initActiveTab">
+			<li><a href="##msTabs-General-Tab" 			data-toggle="tab"><span>#rc.mmRBF.key('general')#</span></a></li>
+			<li><a href="##msTabs-Permissions-Tab" 		data-toggle="tab"><span>#rc.mmRBF.key('permissions')#</span></a></li>
+			<li><a href="##msTabs-Files-Tab" 			data-toggle="tab"><span>#rc.mmRBF.key('files')#</span></a></li>
+			<li><a href="##msTabs-Avatar-Tab" 			data-toggle="tab"><span>#rc.mmRBF.key('avatar')#</span></a></li>
+			<li><a href="##msTabs-Theme-Tab"	 		data-toggle="tab"><span>#rc.mmRBF.key('theme')#</span></a></li>
+		</ul>
+
+		<div class="tab-content row-fluid">
+			#view("settings/includes/settings_edit_general")#
+			#view("settings/includes/settings_edit_permissions")#
+			#view("settings/includes/settings_edit_files")#
+			#view("settings/includes/settings_edit_avatar")#
+			#view("settings/includes/settings_edit_theme")#
+			
+
+			<div class="load-inline tab-preloader"></div>
+	
+			<div class="form-actions">
+				<button type="submit" class="btn" ><i class="icon-check"></i> save</button>
+			</div>	
+		</div>
+	</div>
 	</form>
-</div>
 
 <!--- end content --->
 </cfoutput> 

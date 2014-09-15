@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 <cfcomponent displayname="PageManager" output="false">
 
 	<cffunction name="init" returntype="PageManager" access="public" output="false">
+
 		<cfreturn this>
 	</cffunction>
 
@@ -34,26 +35,35 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="search" required="false" type="string" default="" />
 		<cfargument name="searchtype" required="false" type="string" default="" />
 
+		<cfset var pageBean = "" />
+
 		<cfset arguments.pageManager = this />
-		<cfreturn createObject("component","PageBean").init( argumentCollection=arguments )>
+		<cfset arguments.siteID = arguments.$.event('siteID') />
+		
+		<cfset pageBean = createObject("component","PageBean").init( argumentCollection=arguments )>
+		
+		<cfreturn pageBean />
 	</cffunction>
 	
 	<cffunction name="createNav" returntype="string" access="public" output="false">
 		<cfargument name="pageBean" required="true" type="any" />
 
-		<cfset var sNavFull		= "" />
+		<cfset var sFullString	= "" />
 		<cfset var sNavString	= "" />
-		<cfset var sNavPiece	= "" />
 		<cfset var sNavBack		= "" />
 		<cfset var sNavNext		= "" />
 		<cfset var sNavPage		= "" />
-		<cfset var sSearch		= "" />
 		<cfset var iiX			= "" />
-		<cfset var iPos			= 0 />
 		<cfset var iPageNumber	= pageBean.getPage()>
 		<cfset var iPageCount	= 0 />
 		<cfset var iPagingSize	= pageBean.getRange() />
-		<cfset var assembledURL	= "" />
+		<cfset var settingsBean	= getMeldForumsSettingsManager().getSiteSettings( siteID=pageBean.getSiteID() ) />
+		<cfset var themeBean	= settingsBean.getThemeBean() />
+		
+		<cfif not isDefined("rc")>
+			<cfset rc = structNew() />
+			<cfset rc.mmRBF = getmmRBF() />
+		</cfif>
 
 		<cfif not len( pageBean.getURL() )>
 			<cfset pageBean.setURL( assembleURLStruct( pageBean ) ) />
@@ -96,62 +106,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfif iPageCount gt pageBean.getPages()>
 			<cfset iPageCount = pageBean.getPages()>
 		</cfif>
-
 	
-		<cfif pageBean.getPages()>
-			<cfif pageBean.getPage() lte 1>
-				<cfsavecontent variable="sNavBack">
-					<cfoutput><ul class='mf-navlist mf-navlist-back mf-navlist-off'>
-						<li class='first'>#getmmRBF().key('first')#</li><li class='previous'>#getmmRBF().key('previous')#</li>
-					</ul></cfoutput>
-				</cfsavecontent>
-			<cfelse>
-				<cfsavecontent variable="sNavBack">
-					<cfoutput><ul class='mf-navlist mf-navlist-back'>
-							<li class='mf-navlist-first'><a href='./?#getNavByPage(pageBean,0,1)#'>#getmmRBF().key('first')#</a></li>
-							<li class='mf-navlist-previous'><a href='./?#getNavByPage(pageBean,-1)#'>#getmmRBF().key('previous')#</a></li>
-						</ul></cfoutput>
-				</cfsavecontent>
-			</cfif>
-			<cfif pageBean.getPage() gte pageBean.getPages()>
-				<cfsavecontent variable="sNavNext">
-					<cfoutput><ul class='mf-navlist mf-navlist-next mf-navlist-off'>
-							<li class='next'>#getmmRBF().key('next')#</li><li class='last'>#getmmRBF().key('last')#</li>
-						</ul></cfoutput>
-				</cfsavecontent>
-			<cfelse>
-				<cfsavecontent variable="sNavNext">
-					<cfoutput><ul class='mf-navlist mf-navlist-next mf-navlist-off'>
-						<li class='next'><a href='?#getNavByPage(pageBean,1)#'>#getmmRBF().key('next')#</a></li>
-						<li class='last'><a href='?#getNavByPage(pageBean,0,pageBean.getPageLimit())#'>#getmmRBF().key('last')#</a></li></ul>
-						</ul></cfoutput>
-				</cfsavecontent>
-			</cfif>	
+		<cfsavecontent variable="sNavString" >
+		<cfif not fileExists( expandPath("/MeldForums/themes/#themeBean.getPackageName()#/templates/includes/pageNavTemplate.cfm") )>
+			<cfinclude template="./pageNavTemplate.cfm" />
+		<cfelse>
+			<cfinclude template="/MeldForums/themes/#themeBean.getPackageName()#/templates/includes/pageNavTemplate.cfm" />
 		</cfif>
-
-		<cfif pageBean.getPages()>
-			<cfsavecontent variable="sNavString" >
-			<cfoutput>
-			#sNavBack#
-			<ul class="mf-navlist mf-navlist-pages">
-</cfoutput>
-			<cfloop from="#iPageNumber#" to="#iPageCount#" index="iiX">
-				<cfif iiX eq pageBean.getPage()>
-					<cfoutput><li class='mf-navlist-page current mf-navlist-page-#iiX#'>#iiX#</li>
-</cfoutput>
-				<cfelse>
-					<cfoutput><li class='mf-navlist-page mf-navlist-page-#iiX#'><a href='?#getNavByPage(pageBean,0,iiX)#'>#iiX#</a></li>
-</cfoutput>
-				</cfif>
-			</cfloop>
-			<cfoutput>
-			</ul>
-			#sNavNext#
-			<span class="mf-navlist-info">[ #pageBean.getPages()# <cfif pageBean.getPages() gt 1>#getmmResourceBundle().key('pages')#<cfelse>#getmmResourceBundle().key('page')#</cfif> ]</span>
-</cfoutput>
-			</cfsavecontent>
-		</cfif>
-
+		</cfsavecontent>
 <!---
 		<cfoutput>#sNavString#
 		iPageNumber: #iPageNumber#<br/>
@@ -165,7 +127,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfreturn sNavString />
 	</cffunction>
 
-	<cffunction name="getNavByPage" >
+	<cffunction name="getNavByPage" output="false">
 		<cfargument name="pageBean" required="true" type="any" />
 		<cfargument name="addPage" required="true" type="numeric" default="0" />
 		<cfargument name="setPage" required="true" type="numeric" default="0" />
@@ -267,6 +229,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	</cffunction>
 	<cffunction name="getMMRBF" access="public" returntype="any" output="false">
 		<cfreturn variables.mmResourceBundle>
+	</cffunction>
+
+	<cffunction name="setMeldForumsSettingsManager" access="public" returntype="any" output="false">
+		<cfargument name="MeldForumsSettingsManager" type="any" required="true">
+		<cfset variables.MeldForumsSettingsManager = arguments.MeldForumsSettingsManager>
+	</cffunction>
+	<cffunction name="getMeldForumsSettingsManager" access="public" returntype="any" output="false">
+		<cfreturn variables.MeldForumsSettingsManager>
 	</cffunction>
 
 

@@ -33,5 +33,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		</cfif>		
 	</cffunction>
 
+	<cffunction name="sidenav" access="public" returntype="void" output="false">
+		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
 
+			
+	</cffunction>
 </cfcomponent>

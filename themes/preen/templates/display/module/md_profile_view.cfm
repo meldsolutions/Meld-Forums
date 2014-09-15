@@ -108,4 +108,8 @@
 		</td>
 	</tr>
 </table>
+<cfif len( local.eventContent['profilefooter'] )>
+	#local.eventContent['profilefooter']#
+</cfif>
+
 </cfoutput>

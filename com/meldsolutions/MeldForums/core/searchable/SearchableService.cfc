@@ -36,6 +36,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfreturn tmpObj />
 	</cffunction>
 
+	<cffunction name="rebuildSearch" access="public" output="false" returntype="void">
+				
+		<cfset getSearchableGateway().rebuildSearch() />
+
+	</cffunction>
+
 	<cffunction name="getSearchable" access="public" output="false" returntype="any">
 		<!---^^PRIMARY-START^^--->
 		<cfargument name="PostID" type="uuid" required="true" />

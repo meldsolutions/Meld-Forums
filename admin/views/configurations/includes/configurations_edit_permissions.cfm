@@ -1,79 +1,94 @@
-﻿<cfsilent>
+﻿<cfimport prefix="ui" taglib="../../../ui" />
+<cfsilent>
 	<cfset rc = rc>
 </cfsilent>
 <cfoutput>
-	<div id="msTabs-Permissions">
-		<h3>#rc.mmRBF.key('permissions')#</h3>
-		<ul class="form">
-			<li class="first checkbox">
-				<input class="checkbox" type="checkbox" name="configurationbean_doClosed" id="configurationbean_doClosed" value="1" <cfif form.configurationbean_doClosed>checked</cfif>/>
-				<label for="configurationbean_doClosed">
-					<a href="##" class="tooltip"><span>#rc.mmRBF.key('doClosed','tip')#</span>#rc.mmRBF.key('doClosed')#</a>
+	<div id="tabPermissions" class="tab-pane">
+		<span id="extendset-container-tabbasictop" class="extendset-container"></span>
+		<div class="fieldset">
+			<ui:Checkbox key="doClosed"	name="configurationbean_doClosed" />
+		
+			<div class="control-group">
+				<label class="control-label" for="RestrictReadGroups">
+					<cfif request.context.mmRBF.keyExists('RestrictReadGroups','tip')>
+						<a href="##" rel="tooltip" title="#request.context.mmRBF.key('RestrictReadGroups','tip')#">#request.context.mmRBF.key('RestrictReadGroups')# <i class="icon-question-sign"></i></a>
+					<cfelse>
+						#request.context.mmRBF.key('RestrictReadGroups')#
+					</cfif>
+					<cfif request.context.mmRBF.keyExists('RestrictReadGroups','tip')>
+						<span class="help-inline">(#request.context.mmRBF.key('RestrictReadGroups','tip')#)</span>	
+					</cfif>
 				</label>
-			</li>
-		</ul>
-		<ul class="form">
-			<li class="first">
-				<a href="##" class="tooltip"><span>#rc.mmRBF.key('accesspermissions','tip')#</span><strong>#rc.mmRBF.key('accesspermissions')#</strong></a>
-			</li>
-			<li class="checkbox padded">
-				<label for="configurationbean_dorestrictread">#rc.mmRBF.key('RestrictReadGroups')#</label>
-				<div id="showhide-dorestrictread">
-				<select name="configurationbean_RestrictReadGroups" size="8" multiple="multiple" class="multiSelect" id="configurationbean_RestrictReadGroups">
-				<optgroup label="#htmlEditFormat(rc.mmRBF.key('globalconfiguration'))#">
+
+
+
+				<div class="controls">
+					<select name="configurationbean_RestrictReadGroups" size="8" multiple="multiple" class="multiSelect" id="configurationbean_RestrictReadGroups">
 					<option value="RestrictAll" <cfif form.configurationbean_RestrictReadGroups eq 'RestrictAll'>selected</cfif>>#rc.mmRBF.key('restrictall')#</option>
 					<option value="" <cfif form.configurationbean_RestrictReadGroups eq ''>selected</cfif>>#rc.mmRBF.key('allowall')#</option>
-				</optgroup>
-				<cfif rc.qGroupsPublic.recordcount>
-					<optgroup label="#rc.mmRBF.key('membergroups')#">
-						<cfloop query="rc.qGroupsPublic">
-						<option value="#groupname#" <cfif listfind(form.configurationbean_RestrictReadGroups,groupname)>selected</cfif>>#groupname#</option>
-						</cfloop>
-					</optgroup>
-				</cfif>
-				<cfif rc.qGroupsPrivate.recordcount>
-					<optgroup label="#rc.mmRBF.key('admingroups')#">
-						<cfloop query="rc.qGroupsPrivate">
-						<option value="#groupname#" <cfif listfind(form.configurationbean_RestrictReadGroups,groupname)>selected</cfif>>#groupname#</option>
-						</cfloop>
-					</optgroup>
-				</cfif>
-				</select>
+					<cfif rc.qGroupsPublic.recordcount>
+						<optgroup label="#rc.mmRBF.key('membergroups')#">
+							<cfloop query="rc.qGroupsPublic">
+							<option value="#groupname#" <cfif listfind(form.configurationbean_RestrictReadGroups,groupname)>selected</cfif>>#groupname#</option>
+							</cfloop>
+						</optgroup>
+					</cfif>
+					<cfif rc.qGroupsPrivate.recordcount>
+						<optgroup label="#rc.mmRBF.key('admingroups')#">
+							<cfloop query="rc.qGroupsPrivate">
+							<option value="#groupname#" <cfif listfind(form.configurationbean_RestrictReadGroups,groupname)>selected</cfif>>#groupname#</option>
+							</cfloop>
+						</optgroup>
+					</cfif>
+					</select>
 				</div>
-			</li>
-			<li class="checkbox padded">
-				<label for="configurationbean_dorestrictcontribute">#rc.mmRBF.key('RestrictContributeGroups')#</label>
-				<div id="showhide-dorestrictcontribute">
-				<select name="configurationbean_RestrictContributeGroups" size="8" multiple="multiple" class="multiSelect" id="configurationbean_RestrictContributeGroups">
-				<optgroup label="#htmlEditFormat(rc.mmRBF.key('globalconfiguration'))#">
+			</div>
+		
+			<div class="control-group">
+				<label class="control-label" for="RestrictContributeGroups">
+					<cfif request.context.mmRBF.keyExists('RestrictContributeGroups','tip')>
+						<a href="##" rel="tooltip" title="#request.context.mmRBF.key('RestrictContributeGroups','tip')#">#request.context.mmRBF.key('RestrictContributeGroups')# <i class="icon-question-sign"></i></a>
+					<cfelse>
+						#request.context.mmRBF.key('RestrictContributeGroups')#
+					</cfif>
+					<cfif request.context.mmRBF.keyExists('RestrictContributeGroups','tip')>
+						<span class="help-inline">(#request.context.mmRBF.key('RestrictContributeGroups','tip')#)</span>	
+					</cfif>
+				</label>
+				<div class="controls">
+					<select name="configurationbean_RestrictContributeGroups" size="8" multiple="multiple" class="multiSelect" id="configurationbean_RestrictContributeGroups">
 					<option value="RestrictAll" <cfif form.configurationbean_RestrictContributeGroups eq 'RestrictAll'>selected</cfif>>#rc.mmRBF.key('restrictall')#</option>
 					<option value="" <cfif form.configurationbean_RestrictContributeGroups eq ''>selected</cfif>>#rc.mmRBF.key('allowall')#</option>
-				</optgroup>
-				<cfif rc.qGroupsPublic.recordcount>
-					<optgroup label="#rc.mmRBF.key('membergroups')#">
-						<cfloop query="rc.qGroupsPublic">
-						<option value="#groupname#" <cfif listfind(form.configurationbean_RestrictContributeGroups,groupname)>selected</cfif>>#groupname#</option>
-						</cfloop>
-					</optgroup>
-				</cfif>
-				<cfif rc.qGroupsPrivate.recordcount>
-					<optgroup label="#rc.mmRBF.key('admingroups')#">
-						<cfloop query="rc.qGroupsPrivate">
-						<option value="#groupname#" <cfif listfind(form.configurationbean_RestrictContributeGroups,groupname)>selected</cfif>>#groupname#</option>
-						</cfloop>
-					</optgroup>
-				</cfif>
-				</select>
+					<cfif rc.qGroupsPublic.recordcount>
+						<optgroup label="#rc.mmRBF.key('membergroups')#">
+							<cfloop query="rc.qGroupsPublic">
+							<option value="#groupname#" <cfif listfind(form.configurationbean_RestrictContributeGroups,groupname)>selected</cfif>>#groupname#</option>
+							</cfloop>
+						</optgroup>
+					</cfif>
+					<cfif rc.qGroupsPrivate.recordcount>
+						<optgroup label="#rc.mmRBF.key('admingroups')#">
+							<cfloop query="rc.qGroupsPrivate">
+							<option value="#groupname#" <cfif listfind(form.configurationbean_RestrictContributeGroups,groupname)>selected</cfif>>#groupname#</option>
+							</cfloop>
+						</optgroup>
+					</cfif>
+					</select>
 				</div>
-			</li>
-			<li class="checkbox padded last">
-				<label for="configurationbean_dorestrictmoderate">#rc.mmRBF.key('RestrictModerateGroups')#</label>
-				<div id="showhide-dorestrictmoderate">
+			</div>
+		
+			<div class="control-group">
+				<label class="control-label" for="RestrictModerateGroups">
+					<cfif request.context.mmRBF.keyExists('RestrictModerateGroups','tip')>
+						<a href="##" rel="tooltip" title="#request.context.mmRBF.key('RestrictModerateGroups','tip')#">#request.context.mmRBF.key('RestrictModerateGroups')# <i class="icon-question-sign"></i></a>
+					<cfelse>
+						#request.context.mmRBF.key('RestrictModerateGroups')#
+					</cfif>
+				</label>
+				<div class="controls">
 					<select name="configurationbean_RestrictModerateGroups" size="8" multiple="multiple" class="multiSelect" id="configurationbean_RestrictModerateGroups">
-					<optgroup label="#htmlEditFormat(rc.mmRBF.key('globalconfiguration'))#">
 						<option value="RestrictAll" <cfif form.configurationbean_RestrictModerateGroups eq 'RestrictAll'>selected</cfif>>#rc.mmRBF.key('restrictall')#</option>
 						<option value="" <cfif form.configurationbean_RestrictModerateGroups eq ''>selected</cfif>>#rc.mmRBF.key('allowall')#</option>
-					</optgroup>
 					<cfif rc.qGroupsPublic.recordcount>
 						<optgroup label="#rc.mmRBF.key('membergroups')#">
 							<cfloop query="rc.qGroupsPublic">
@@ -85,12 +100,16 @@
 						<optgroup label="#rc.mmRBF.key('admingroups')#">
 							<cfloop query="rc.qGroupsPrivate">
 							<option value="#groupname#" <cfif listfind(form.configurationbean_RestrictModerateGroups,groupname)>selected</cfif>>#groupname#</option>
-							</cfloop>
-						</optgroup>
+								</cfloop>
+							</optgroup>
 					</cfif>
 					</select>
 				</div>
-			</li>
-		</ul>
+			</div>
+	
+		</div>
+
 	</div>
+
+
 </cfoutput>

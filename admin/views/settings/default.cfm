@@ -7,12 +7,12 @@
 </cfsilent><cfoutput>
 <!--- global menu --->
 <!--- begin content --->
-		<div id="meld-actions" class="section clearfix">
-			#view("settings/includes/default_actions")#
+	<div class="row">
+		<div class="span12">
+			<a href="#buildURL('admin:settings.edit')#" title="#rc.mmRBF.key('editsettings','tip')#" class="btn pull-right"><i class="icon-plus-sign"></i> #rc.mmRBF.key('editsettings')#</a>
 		</div>
-		<div id="meld-body">
-			<!-- CONTENT HERE -->
-			#view("settings/includes/default_view_settings")#
-		</div>	
+	</div>
+	<!-- CONTENT HERE -->
+	#view("settings/includes/default_view_settings")#
 <!--- end content --->
 </cfoutput> 

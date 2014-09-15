@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cfset variables.values			= StructNew()>
 	<cfset variables.customvalues	= StructNew()>
 	<cfset variables.customset		= false>
+	<cfset variables.instance = StructNew() />
 
 	<cffunction name="init" access="public" output="false" returntype="MeldBean">
 		<cfargument name="isDirty" type="boolean" required="false" default="0" /> 
@@ -158,7 +159,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfreturn structkeyexists( variables.values,arguments.key) or structkeyexists( variables.customvalues,arguments.key) />
 	</cffunction>
 	<cffunction name="getAllValues" access="public" output="false" returntype="struct">
-		<cfreturn variables.values />
+		<cfreturn getMemento() />
 	</cffunction>
 	<cffunction name="getAllCustomValues" access="public" output="false" returntype="struct">
 		<cfreturn variables.customvalues />
@@ -180,11 +181,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset variables.values[arguments.key] = arguments.value />
 	</cffunction>
 
+	<cffunction name="setValues" access="public" output="false" returntype="any">
+		<cfargument name="valueStruct" type="struct" required="true">
+		
+		<cfset structAppend(variables.instance,structCopy(arguments.valueStruct),true) />
+		
+		<cfreturn this />
+	</cffunction>
+
 	<cffunction name="getValue" access="public" output="false" returntype="any">
 		<cfargument name="key" type="string" required="true">
 		
 		<cfif structkeyexists( variables.values,arguments.key)>
 			<cfreturn variables.values[arguments.key] />
+		<cfelseif structkeyexists( variables.instance,arguments.key)>
+			<cfreturn variables.instance[arguments.key] />
 		<cfelseif structkeyexists( variables.customvalues,arguments.key)>
 			<cfreturn variables.customvalues[arguments.key] />
 		</cfif>

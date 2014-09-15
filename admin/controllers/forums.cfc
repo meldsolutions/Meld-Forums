@@ -26,8 +26,47 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset  actionCheck( arguments.rc )>
 	</cffunction>
 
+	<cffunction name="delete" access="public" returntype="void" output="false">
+		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
+		
+		<cfif not rc.$.currentUser().isPrivateUser()>
+			<cflocation url="?">
+		</cfif>
+		
+		<cfset var success = actionDeleteForum( arguments.rc )>
+
+		<cfif success eq true>
+			<cflocation url="?action=conferences" addtoken="false">
+		</cfif> 
+	</cffunction>
+
+	<cffunction name="reorder" access="public" returntype="void" output="false">
+		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
+
+		<cfset rc.mmBC.addCrumb( rc,rc.mmRBF.key('forums'),"?action=forums" )>
+		<cfset rc.mmBC.addCrumb( rc,rc.mmRBF.key('reorder') )>
+		<cfparam name="rc.conferenceID" default="" />
+
+		<cfif not rc.$.currentUser().isPrivateUser()>
+			<cflocation url="?">
+		</cfif>
+
+		<!--- check if a button was clicked --->
+		<cfif StructKeyExists(rc,"sortorder") and len(rc.sortOrder) gt 0>
+			<cfset getBeanFactory().getBean("ForumService").setSortOrder( rc.sortOrder ) />
+			<cflocation url="?action=Forums&conferenceID=#rc.conferenceID#" addtoken="false">
+		</cfif>
+		
+		<cfset rc.aForums = getBeanFactory().getBean("ForumService").search( criteria={conferenceID=rc.conferenceID},orderby="OrderNo ASC" ) /> 
+	</cffunction>
+
 	<cffunction name="edit" access="public" returntype="void" output="false">
 		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
+
+		<cfif not rc.$.currentUser().isPrivateUser()>
+			<cflocation url="?">
+		</cfif>
+
 	
 		<cfset var conferenceService	= getBeanFactory().getBean("conferenceService") />
 		<cfset var forumService			= getBeanFactory().getBean("forumService") />
@@ -89,7 +128,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfset mmBreadCrumbs.addCrumb( rc,mmResourceBundle.key('conferences'),"?action=conferences" )>
 			<cfset mmBreadCrumbs.addCrumb( rc,conferenceBean.getName(),"?action=forums&conferenceid=" & arguments.rc.conferenceID )>
 			<cfset mmBreadCrumbs.addCrumb( rc,forumBean.getName() )>
-			<cfset mmBreadCrumbs.addCrumb( rc,mmResourceBundle.key('edit') )>
 		<cfelse>
 			<cfset sArgs = StructNew() />
 			<cfset mmBreadCrumbs.addCrumb( rc,mmResourceBundle.key('conferences'),"?action=conferences" )>
@@ -98,6 +136,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				<cfset sArgs.conferenceID	= arguments.rc.conferenceID>
 				<cfset conferenceBean 		= conferenceService.getConference(argumentCollection=sArgs) />
 				<cfset mmBreadCrumbs.addCrumb( rc,conferenceBean.getName(),"?action=forums&conferenceid=" & arguments.rc.conferenceID )>
+			<cfelse>
+				<cfset mmBreadCrumbs.addCrumb( rc,mmResourceBundle.key('forums'),"?action=forums" )>
 			</cfif>
 			<cfset mmBreadCrumbs.addCrumb( rc,mmResourceBundle.key('addforum') )>
 		</cfif>
@@ -243,11 +283,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cffunction name="actionDeleteForum" access="private" returntype="boolean">
 		<cfargument name="rc" type="struct" required="true">
 		<cfset var forumService	= getBeanFactory().getBean("ForumService") />
-		<cfset var mmFormTools	= getBeanFactory().getBean("mmFormTools") />
-		
-		<cfset formData = mmFormTools.scopeFormSubmission(form,false,true) />
 		
 		<!--- save the forum --->
-		<cfreturn ForumService.deleteForum( formData.forumbean.forumID ) />		
+		<cfreturn ForumService.deleteForum( rc.forumID ) />		
 	</cffunction>	
 </cfcomponent>
