@@ -163,7 +163,7 @@ $(document).ready(function() {
 			for(var x in sColumns) {
 				if( sColumns[x] != null ) {
 					nCol =  $("#" + sColumns[x]).attr("data-column");
-					nVal =  $("#" + sColumns[x]).attr("value");
+					nVal =  $("#" + sColumns[x]).val();
 					aoData.push( { "name": "criteria_" + nCol,"value": nVal} );
 				}
 			}

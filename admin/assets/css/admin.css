@@ -8,3 +8,9 @@
 @import "nav.css";
 @import "form.css";
 @import "plugin.css";
+
+.mura textarea, .mura select[multiple], .mura select[size] {
+	min-height: 1px !important;
+	width: auto;
+}
+	

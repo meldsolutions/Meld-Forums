@@ -44,10 +44,6 @@
 			<cfcatch>
 			</cfcatch>		
 		</cftry>
-		
-		<cfif qExists.recordCount>
-			<cfreturn>
-		</cfif>
 
 		<cfinclude template="./config.cfm" />
 		
